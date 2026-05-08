@@ -411,3 +411,127 @@ body {
 .animate-spin-slow {
     animation: spin-slow 8s linear infinite;
 }
+
+/* ============================================
+   ANIMASI & POLISH TAMBAHAN
+   ============================================ */
+
+/* Fade-in saat halaman/page ditampilkan */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.page-view:not(.hidden) {
+    animation: fadeInUp 0.35s ease-out;
+}
+
+/* Hover scale pada stat cards */
+.page-view .grid > div {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.page-view .grid > div:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* Smooth transitions pada table rows */
+table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+/* Tombol hover glow effect */
+button[type="submit"],
+.bg-blue-700,
+.bg-blue-900,
+.bg-blue-950 {
+    transition: all 0.2s ease;
+}
+
+button[type="submit"]:hover,
+.bg-blue-700:hover {
+    box-shadow: 0 4px 14px rgba(29, 78, 216, 0.3);
+}
+
+/* Sidebar nav item transition */
+#app-sidebar-nav button {
+    transition: all 0.15s ease;
+}
+
+/* Notifikasi card hover */
+#page-notifikasi .bg-white {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+#page-notifikasi .bg-white:hover {
+    transform: translateX(4px);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Pulse animation untuk notification badge */
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.animate-pulse-dot {
+    animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* Loading skeleton animation */
+@keyframes shimmer {
+    0% { background-position: -200px 0; }
+    100% { background-position: 200px 0; }
+}
+
+.skeleton {
+    background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+    background-size: 400px 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+}
+
+/* Route view transition */
+.route-view {
+    transition: opacity 0.3s ease;
+}
+
+/* Login/Register form input focus glow */
+input:focus, select:focus, textarea:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Sidebar active state left accent */
+#app-sidebar-nav button.bg-blue-50 {
+    border-left: 3px solid #2563eb;
+}
+
+/* Avatar hover effect */
+#user-avatar {
+    transition: transform 0.2s ease;
+}
+
+#user-avatar:hover {
+    transform: scale(1.08);
+}
+
+/* Stats card counter animation */
+@keyframes countUp {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.page-view:not(.hidden) .grid h3 {
+    animation: countUp 0.4s ease-out 0.1s both;
+}
+
+.page-view:not(.hidden) .grid > div:nth-child(2) h3 { animation-delay: 0.15s; }
+.page-view:not(.hidden) .grid > div:nth-child(3) h3 { animation-delay: 0.2s; }
+.page-view:not(.hidden) .grid > div:nth-child(4) h3 { animation-delay: 0.25s; }
