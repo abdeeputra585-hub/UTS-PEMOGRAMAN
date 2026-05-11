@@ -16,6 +16,11 @@ const navigationMenus = {
         { id: 'notifikasi', label: 'Notifikasi', icon: 'fa-bell', badge: 12 },
         { id: 'profil-siswa', label: 'Profil Siswa', icon: 'fa-id-card' }
     ],
+    kepala_sekolah: [
+        { id: 'admin-dashboard', label: 'Dashboard', icon: 'fa-chart-pie' },
+        { id: 'admin-laporan', label: 'Laporan', icon: 'fa-file-invoice-dollar' },
+        { id: 'notifikasi', label: 'Notifikasi', icon: 'fa-bell', badge: 0 }
+    ],
     parent: [
         { id: 'parent-portal', label: 'Dashboard Portal', icon: 'fa-chart-line' },
         { id: 'profil-siswa', label: 'Profil Anak', icon: 'fa-user-graduate' },
@@ -25,6 +30,7 @@ const navigationMenus = {
 
 const userCredentialsMock = {
     admin: { name: 'Haryanto Putro', title: 'Super Administrator', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100' },
+    kepala_sekolah: { name: 'Drs. Ahmad Dahlan', title: 'Kepala Sekolah', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=100' },
     parent: { name: 'Budi Santoso', title: 'Wali Murid (Orang Tua)', avatar: 'https://i1-c.pinimg.com/736x/69/c1/27/69c127c94e626793d5df6f274e187627.jpg' }
 };
 
@@ -40,15 +46,21 @@ function showRoute(routeId) {
 function setLoginRole(role) {
     const btnAdmin = document.getElementById('login-toggle-admin');
     const btnParent = document.getElementById('login-toggle-parent');
+    const btnKepsek = document.getElementById('login-toggle-kepsek');
     const emailInput = document.getElementById('login-email');
 
+    [btnAdmin, btnParent, btnKepsek].forEach(btn => {
+        if(btn) btn.className = "w-1/3 py-2 text-xs font-bold rounded-lg transition-all text-slate-500";
+    });
+
     if (role === 'admin') {
-        btnAdmin.className = "w-1/2 py-2 text-xs font-bold rounded-lg transition-all bg-white text-blue-700 shadow-xs";
-        btnParent.className = "w-1/2 py-2 text-xs font-bold rounded-lg transition-all text-slate-500";
+        if(btnAdmin) btnAdmin.className = "w-1/3 py-2 text-xs font-bold rounded-lg transition-all bg-white text-blue-700 shadow-xs";
         emailInput.value = "admin@school.id";
+    } else if (role === 'kepala_sekolah') {
+        if(btnKepsek) btnKepsek.className = "w-1/3 py-2 text-xs font-bold rounded-lg transition-all bg-white text-blue-700 shadow-xs";
+        emailInput.value = "kepsek@school.id";
     } else {
-        btnParent.className = "w-1/2 py-2 text-xs font-bold rounded-lg transition-all bg-white text-blue-700 shadow-xs";
-        btnAdmin.className = "w-1/2 py-2 text-xs font-bold rounded-lg transition-all text-slate-500";
+        if(btnParent) btnParent.className = "w-1/3 py-2 text-xs font-bold rounded-lg transition-all bg-white text-blue-700 shadow-xs";
         emailInput.value = "budisantoso@email.com";
     }
 }
@@ -75,7 +87,7 @@ async function executeLogin(event) {
     } catch (err) {
         // Fallback jika API belum aktif
         console.warn('API belum aktif, menggunakan mode demo:', err);
-        let targetedRole = email.includes('admin') ? 'admin' : 'parent';
+        let targetedRole = email.includes('admin') ? 'admin' : (email.includes('kepsek') ? 'kepala_sekolah' : 'parent');
         loginAs(targetedRole);
     }
 }
@@ -125,7 +137,7 @@ function loginAs(role, userData) {
 
     const creds = userData || userCredentialsMock[role];
     document.getElementById('user-fullname').innerText = creds.nama || creds.name;
-    document.getElementById('user-role-title').innerText = role === 'admin' ? 'Super Administrator' : 'Wali Murid (Orang Tua)';
+    document.getElementById('user-role-title').innerText = role === 'admin' ? 'Super Administrator' : (role === 'kepala_sekolah' ? 'Kepala Sekolah' : 'Wali Murid (Orang Tua)');
     document.getElementById('user-avatar').src = creds.avatar || userCredentialsMock[role].avatar;
 
     const brandLogo = document.getElementById('brand-logo-container');
@@ -139,6 +151,13 @@ function loginAs(role, userData) {
         brandSub.innerText = "School Management";
         appState.currentTab = 'admin-dashboard';
         document.getElementById('topbar-context-title').innerText = "Sistem Pengelolaan Data Wali Siswa (Workspace Administrator)";
+    } else if (role === 'kepala_sekolah') {
+        brandLogo.className = "w-9 h-9 bg-emerald-700 text-white rounded-xl flex items-center justify-center text-base font-bold shadow-md";
+        brandLogo.innerHTML = `<i class="fa-solid fa-chart-pie"></i>`;
+        brandTitle.innerText = "Executive Panel";
+        brandSub.innerText = "School Monitoring";
+        appState.currentTab = 'admin-dashboard';
+        document.getElementById('topbar-context-title').innerText = "Dashboard Pemantauan Data (Read-Only)";
     } else {
         brandLogo.className = "w-9 h-9 bg-purple-700 text-white rounded-xl flex items-center justify-center text-base font-bold shadow-md";
         brandLogo.innerHTML = `<i class="fa-solid fa-users-rectangle"></i>`;
@@ -194,6 +213,12 @@ function switchTab(tabId) {
     });
 
     document.getElementById('workspace-viewport').scrollTop = 0;
+
+    // Sembunyikan tombol aksi dashboard jika role adalah kepala_sekolah
+    const dashActions = document.getElementById('dashboard-action-buttons');
+    if (dashActions) {
+        dashActions.style.display = appState.currentRole === 'kepala_sekolah' ? 'none' : 'flex';
+    }
 
     // Load data dari API sesuai tab
     if (tabId === 'admin-dashboard') loadDashboardData();

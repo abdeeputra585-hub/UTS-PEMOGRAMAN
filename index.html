@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,145 +9,246 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
-
-
 
     <div class="flex-1 flex flex-col relative min-h-0">
 
-        <div id="route-login" class="route-view hidden fixed inset-t-0 w-full h-full bg-white flex flex-col md:flex-row z-40">
-            <div class="hidden md:flex md:w-1/2 text-white p-12 flex-col justify-between relative overflow-hidden bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900">
-                <div class="z-10 flex items-center gap-2 text-lg font-bold"><i class="fa-solid fa-graduation-cap text-blue-400"></i> ADVANCED ACADEMIC ERP</div>
+        <div id="route-login"
+            class="route-view hidden fixed inset-0 w-full h-full bg-white flex flex-col md:flex-row z-40">
+            <div
+                class="hidden md:flex md:w-1/2 text-white p-12 flex-col justify-between relative overflow-hidden bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900">
+                <div class="z-10 flex items-center gap-2 text-lg font-bold"><i
+                        class="fa-solid fa-graduation-cap text-blue-400"></i> ADVANCED ACADEMIC ERP</div>
                 <div class="my-auto z-10 max-w-md space-y-4">
-                    <img src="https://i1-c.pinimg.com/736x/41/45/f4/4145f439fbfdeb99a6c2480775728376.jpg" class="rounded-2xl shadow-xl border border-blue-700/50 object-cover h-48 w-full mb-6" alt="Branding">
+                    <img src="https://i1-c.pinimg.com/736x/41/45/f4/4145f439fbfdeb99a6c2480775728376.jpg"
+                        class="rounded-2xl shadow-xl border border-blue-700/50 object-cover h-48 w-full mb-6"
+                        alt="Branding">
                     <h1 class="text-3xl font-extrabold tracking-tight">Efisiensi Administrasi Sekolah</h1>
-                    <p class="text-blue-100/80 font-light text-sm leading-relaxed">Kelola data wali siswa dengan sistem yang terintegrasi, aman, dan mudah diakses untuk meningkatkan kolaborasi antara sekolah dan orang tua.</p>
+                    <p class="text-blue-100/80 font-light text-sm leading-relaxed">Kelola data wali siswa dengan sistem
+                        yang terintegrasi, aman, dan mudah diakses untuk meningkatkan kolaborasi antara sekolah dan
+                        orang tua.</p>
                 </div>
-                <div class="text-xs text-blue-300 z-10">&copy; 2026 Sistem Pengelolaan Data Wali Siswa. All rights reserved.</div>
-                <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-blue-700 rounded-full mix-blend-multiply filter blur-xl opacity-40"></div>
+                <div class="text-xs text-blue-300 z-10">&copy; 2026 Sistem Pengelolaan Data Wali Siswa. All rights
+                    reserved.</div>
+                <div
+                    class="absolute -bottom-20 -left-20 w-80 h-80 bg-blue-700 rounded-full mix-blend-multiply filter blur-xl opacity-40">
+                </div>
             </div>
-            <div class="w-full md:w-1/2 flex items-center justify-center p-8 bg-slate-50">
-                <div class="w-full max-w-md bg-white border border-slate-100 p-8 rounded-3xl shadow-xl space-y-6">
+            <div
+                class="w-full md:w-1/2 flex items-center justify-center p-6 sm:p-8 md:p-12 bg-slate-50 h-full overflow-y-auto">
+                <div
+                    class="w-full max-w-md bg-white border border-slate-100 p-8 sm:p-10 rounded-3xl shadow-2xl shadow-blue-900/5 space-y-6 my-auto">
                     <div class="text-center space-y-1">
-                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mx-auto text-xl shadow-xs"><i class="fa-solid fa-user-shield"></i></div>
+                        <div
+                            class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mx-auto text-xl shadow-xs">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
                         <h2 class="text-xl font-bold text-slate-900">Sistem Pengelolaan Data Wali</h2>
-                        <p class="text-xs text-slate-400">Silakan pilih peran Anda sebagai Administrator atau Orang Tua/Wali untuk masuk ke sistem</p>
+                        <p class="text-xs text-slate-400">Silakan pilih peran Anda sebagai Administrator atau Orang
+                            Tua/Wali untuk masuk ke sistem</p>
                     </div>
                     <div class="flex p-1 bg-slate-100 rounded-xl">
-                        <button id="login-toggle-admin" onclick="setLoginRole('admin')" class="w-1/2 py-2 text-xs font-bold rounded-lg transition-all bg-white text-blue-700 shadow-xs">Administrator</button>
-                        <button id="login-toggle-parent" onclick="setLoginRole('parent')" class="w-1/2 py-2 text-xs font-bold rounded-lg transition-all text-slate-500">Orang Tua/Wali</button>
+                        <button id="login-toggle-admin" onclick="setLoginRole('admin')"
+                            class="w-1/3 py-2 text-xs font-bold rounded-lg transition-all bg-white text-blue-700 shadow-xs">Admin</button>
+                        <button id="login-toggle-kepsek" onclick="setLoginRole('kepala_sekolah')"
+                            class="w-1/3 py-2 text-xs font-bold rounded-lg transition-all text-slate-500">Kepsek</button>
+                        <button id="login-toggle-parent" onclick="setLoginRole('parent')"
+                            class="w-1/3 py-2 text-xs font-bold rounded-lg transition-all text-slate-500">Wali</button>
                     </div>
                     <form onsubmit="executeLogin(event)" class="space-y-4">
                         <div class="space-y-1">
-                            <label class="text-2xs font-bold uppercase tracking-wider text-slate-500">Alamat Email</label>
-                            <div class="relative"><span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-xs"><i class="fa-regular fa-envelope"></i></span><input type="email" id="login-email" required class="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all" value="admin@school.id"></div>
+                            <label class="text-2xs font-bold uppercase tracking-wider text-slate-500">Alamat
+                                Email</label>
+                            <div class="relative"><span
+                                    class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-xs"><i
+                                        class="fa-regular fa-envelope"></i></span><input type="email" id="login-email"
+                                    required
+                                    class="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all"
+                                    value="admin@school.id"></div>
                         </div>
                         <div class="space-y-1">
-                            <div class="flex justify-between items-center"><label class="text-2xs font-bold uppercase tracking-wider text-slate-500">Kata Sandi</label><a href="#" class="text-2xs text-blue-600 hover:underline">Lupa Sandi?</a></div>
-                            <div class="relative"><span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-xs"><i class="fa-solid fa-lock"></i></span><input type="password" id="login-password" value="password123" required class="w-full pl-9 pr-10 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all"><span class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 text-xs cursor-pointer"><i class="fa-regular fa-eye"></i></span></div>
+                            <div class="flex justify-between items-center"><label
+                                    class="text-2xs font-bold uppercase tracking-wider text-slate-500">Kata
+                                    Sandi</label><a href="#" class="text-2xs text-blue-600 hover:underline">Lupa
+                                    Sandi?</a></div>
+                            <div class="relative"><span
+                                    class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-xs"><i
+                                        class="fa-solid fa-lock"></i></span><input type="password" id="login-password"
+                                    value="password123" required
+                                    class="w-full pl-9 pr-10 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all"><span
+                                    class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 text-xs cursor-pointer"><i
+                                        class="fa-regular fa-eye"></i></span></div>
                         </div>
-                        <div class="flex items-center"><input type="checkbox" id="remember" class="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"><label for="remember" class="ml-2 text-xs text-slate-500">Ingat saya di perangkat ini</label></div>
-                        <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-2.5 rounded-xl text-xs transition-all shadow-md shadow-blue-700/10 flex items-center justify-center gap-2">Masuk Sekarang <i class="fa-solid fa-arrow-right-to-bracket text-2xs"></i></button>
+                        <div class="flex items-center"><input type="checkbox" id="remember"
+                                class="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"><label
+                                for="remember" class="ml-2 text-xs text-slate-500">Ingat saya di perangkat ini</label>
+                        </div>
+                        <button type="submit"
+                            class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-2.5 rounded-xl text-xs transition-all shadow-md shadow-blue-700/10 flex items-center justify-center gap-2">Masuk
+                            Sekarang <i class="fa-solid fa-arrow-right-to-bracket text-2xs"></i></button>
                     </form>
-                    <div class="pt-4 border-t border-slate-100 text-center"><p class="text-2xs text-slate-400">Khusus untuk Orang Tua/Wali, belum memiliki akun? <a onclick="showRoute('register')" class="text-blue-600 font-bold hover:underline cursor-pointer">Daftar Akun Orang Tua/Wali &rarr;</a></p></div>
+                    <div class="pt-4 border-t border-slate-100 text-center">
+                        <p class="text-2xs text-slate-400">Khusus untuk Orang Tua/Wali, belum memiliki akun? <a
+                                onclick="showRoute('register')"
+                                class="text-blue-600 font-bold hover:underline cursor-pointer">Daftar Akun Orang
+                                Tua/Wali &rarr;</a></p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div id="route-register" class="route-view hidden fixed inset-t-0 w-full h-full bg-white flex flex-col md:flex-row z-40">
-            <div class="hidden md:flex md:w-5/12 text-white p-12 flex-col justify-between relative overflow-hidden bg-gradient-to-br from-indigo-900 via-blue-800 to-blue-900">
-                <div class="z-10 flex items-center gap-2 text-lg font-bold"><i class="fa-solid fa-graduation-cap text-blue-400"></i> Admin Panel</div>
+        <div id="route-register"
+            class="route-view hidden fixed inset-0 w-full h-full bg-white flex flex-col md:flex-row z-40">
+            <div
+                class="hidden md:flex md:w-5/12 text-white p-12 flex-col justify-between relative overflow-hidden bg-gradient-to-br from-indigo-900 via-blue-800 to-blue-900">
+                <div class="z-10 flex items-center gap-2 text-lg font-bold"><i
+                        class="fa-solid fa-graduation-cap text-blue-400"></i> Admin Panel</div>
                 <div class="my-auto z-10 max-w-sm space-y-3">
                     <h2 class="text-2xl font-extrabold">Sistem Pengelolaan Data Wali Siswa</h2>
-                    <p class="text-blue-100/80 font-light text-xs leading-relaxed">Platform terpadu untuk koordinasi data wali murid yang aman, transparan, dan efisien.</p>
+                    <p class="text-blue-100/80 font-light text-xs leading-relaxed">Platform terpadu untuk koordinasi
+                        data wali murid yang aman, transparan, dan efisien.</p>
                     <div class="pt-4 border-t border-blue-700 flex justify-between text-2xs text-blue-200">
-                        <div><p class="font-bold text-white text-sm">1.2k+</p><p>Wali Terdaftar</p></div>
-                        <div><p class="font-bold text-white text-sm">99%</p><p>Data Terverifikasi</p></div>
+                        <div>
+                            <p class="font-bold text-white text-sm">1.2k+</p>
+                            <p>Wali Terdaftar</p>
+                        </div>
+                        <div>
+                            <p class="font-bold text-white text-sm">99%</p>
+                            <p>Data Terverifikasi</p>
+                        </div>
                     </div>
                 </div>
                 <div class="text-xs text-blue-300 z-10">&copy; 2026 Sistem Pengelolaan Data Wali Siswa.</div>
             </div>
-            <div class="w-full md:w-7/12 flex items-center justify-center p-6 bg-slate-50 overflow-y-auto custom-scrollbar h-full">
-                <div class="w-full max-w-xl bg-white border border-slate-100 p-8 rounded-3xl shadow-xl space-y-6 my-auto">
+            <div
+                class="w-full md:w-7/12 flex items-center justify-center p-6 sm:p-8 md:p-12 bg-slate-50 overflow-y-auto custom-scrollbar h-full">
+                <div
+                    class="w-full max-w-xl bg-white border border-slate-100 p-8 sm:p-10 rounded-3xl shadow-2xl shadow-blue-900/5 space-y-6 my-auto">
                     <div>
                         <h2 class="text-xl font-bold text-slate-900">Registrasi Orang Tua / Wali Siswa</h2>
-                        <p class="text-xs text-slate-400">Lengkapi data diri Anda untuk mengakses sistem informasi sekolah.</p>
+                        <p class="text-xs text-slate-400">Lengkapi data diri Anda untuk mengakses sistem informasi
+                            sekolah.</p>
                     </div>
                     <form onsubmit="executeRegister(event)" class="space-y-4">
                         <div class="space-y-1">
-                            <label class="text-2xs font-bold uppercase tracking-wider text-slate-500">Nama Lengkap <span class="text-red-500">*</span></label>
-                            <input type="text" required class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-blue-500" placeholder="Masukkan nama lengkap">
+                            <label class="text-2xs font-bold uppercase tracking-wider text-slate-500">Nama Lengkap <span
+                                    class="text-red-500">*</span></label>
+                            <input type="text" required
+                                class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-blue-500"
+                                placeholder="Masukkan nama lengkap">
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="space-y-1">
-                                <label class="text-2xs font-bold uppercase tracking-wider text-slate-500">Alamat Email <span class="text-red-500">*</span></label>
-                                <input type="email" required class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-blue-500" placeholder="nama@email.com">
+                                <label class="text-2xs font-bold uppercase tracking-wider text-slate-500">Alamat Email
+                                    <span class="text-red-500">*</span></label>
+                                <input type="email" required
+                                    class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-blue-500"
+                                    placeholder="nama@email.com">
                             </div>
                             <div class="space-y-1">
-                                <label class="text-2xs font-bold uppercase tracking-wider text-slate-500">Nomor Telepon <span class="text-red-500">*</span></label>
-                                <input type="text" required class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-blue-500" placeholder="+62 8...">
+                                <label class="text-2xs font-bold uppercase tracking-wider text-slate-500">Nomor Telepon
+                                    <span class="text-red-500">*</span></label>
+                                <input type="text" required
+                                    class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-blue-500"
+                                    placeholder="+62 8...">
                             </div>
                         </div>
                         <div class="space-y-1">
-                            <label class="text-2xs font-bold uppercase tracking-wider text-slate-500">Alamat Lengkap <span class="text-red-500">*</span></label>
-                            <textarea required rows="2" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-blue-500 custom-scrollbar resize-none" placeholder="Masukkan alamat lengkap rumah"></textarea>
+                            <label class="text-2xs font-bold uppercase tracking-wider text-slate-500">Alamat Lengkap
+                                <span class="text-red-500">*</span></label>
+                            <textarea required rows="2"
+                                class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-blue-500 custom-scrollbar resize-none"
+                                placeholder="Masukkan alamat lengkap rumah"></textarea>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="space-y-1">
-                                <label class="text-2xs font-bold uppercase tracking-wider text-slate-500">Kata Sandi <span class="text-red-500">*</span></label>
-                                <input type="password" required class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-blue-500" placeholder="••••••••">
+                                <label class="text-2xs font-bold uppercase tracking-wider text-slate-500">Kata Sandi
+                                    <span class="text-red-500">*</span></label>
+                                <input type="password" required
+                                    class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-blue-500"
+                                    placeholder="••••••••">
                             </div>
                             <div class="space-y-1">
-                                <label class="text-2xs font-bold uppercase tracking-wider text-slate-500">Konfirmasi Kata Sandi <span class="text-red-500">*</span></label>
-                                <input type="password" required class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-blue-500" placeholder="••••••••">
+                                <label class="text-2xs font-bold uppercase tracking-wider text-slate-500">Konfirmasi
+                                    Kata Sandi <span class="text-red-500">*</span></label>
+                                <input type="password" required
+                                    class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-blue-500"
+                                    placeholder="••••••••">
                             </div>
                         </div>
-                        <div class="flex items-center"><input type="checkbox" required id="agree" class="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"><label for="agree" class="ml-2 text-xs text-slate-500">Saya menyetujui syarat dan ketentuan yang berlaku.</label></div>
-                        <button type="submit" class="w-full bg-blue-950 hover:bg-blue-900 text-white font-bold py-2.5 rounded-xl text-xs transition-all shadow-md">Daftar Sekarang</button>
+                        <div class="flex items-center"><input type="checkbox" required id="agree"
+                                class="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"><label
+                                for="agree" class="ml-2 text-xs text-slate-500">Saya menyetujui syarat dan ketentuan
+                                yang berlaku.</label></div>
+                        <button type="submit"
+                            class="w-full bg-blue-950 hover:bg-blue-900 text-white font-bold py-2.5 rounded-xl text-xs transition-all shadow-md">Daftar
+                            Sekarang</button>
                     </form>
-                    <div class="text-center text-xs text-slate-500">Sudah punya akun? <a onclick="showRoute('login')" class="text-blue-600 font-bold hover:underline cursor-pointer">Login</a></div>
+                    <div class="text-center text-xs text-slate-500">Sudah punya akun? <a onclick="showRoute('login')"
+                            class="text-blue-600 font-bold hover:underline cursor-pointer">Login</a></div>
                 </div>
             </div>
         </div>
 
         <div id="route-app" class="route-view flex-1 flex min-h-0 relative">
-            
+
             <aside class="w-64 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0">
                 <div class="flex flex-col min-h-0">
                     <div class="p-5 border-b border-slate-100 flex items-center gap-3">
-                        <div id="brand-logo-container" class="w-9 h-9 bg-blue-700 text-white rounded-xl flex items-center justify-center text-base font-bold shadow-md shadow-blue-700/10"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div id="brand-logo-container"
+                            class="w-9 h-9 bg-blue-700 text-white rounded-xl flex items-center justify-center text-base font-bold shadow-md shadow-blue-700/10">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
                         <div>
                             <h3 id="brand-title" class="font-bold text-slate-900 text-sm leading-tight">Admin Panel</h3>
-                            <p id="brand-subtitle" class="text-3xs font-bold text-slate-400 tracking-wider uppercase">School Management</p>
+                            <p id="brand-subtitle" class="text-3xs font-bold text-slate-400 tracking-wider uppercase">
+                                School Management</p>
                         </div>
                     </div>
-                    <nav id="app-sidebar-nav" class="flex-1 p-4 space-y-1 overflow-y-auto custom-scrollbar text-xs font-semibold">
-                        </nav>
+                    <nav id="app-sidebar-nav"
+                        class="flex-1 p-4 space-y-1 overflow-y-auto custom-scrollbar text-xs font-semibold">
+                    </nav>
                 </div>
-                
+
                 <div class="p-4 border-t border-slate-100 space-y-3 bg-slate-50/50">
                     <div class="flex items-center gap-3 px-1">
-                        <img id="user-avatar" src="https://i1-c.pinimg.com/736x/66/2d/3b/662d3b6fee31baa144b04cd8b1c7a699.jpg" class="w-9 h-9 rounded-full object-cover border border-slate-200 bg-slate-100" alt="Profile">
+                        <img id="user-avatar"
+                            src="https://i1-c.pinimg.com/736x/66/2d/3b/662d3b6fee31baa144b04cd8b1c7a699.jpg"
+                            class="w-9 h-9 rounded-full object-cover border border-slate-200 bg-slate-100"
+                            alt="Profile">
                         <div class="min-w-0 flex-1">
                             <h4 id="user-fullname" class="text-xs font-bold text-slate-900 truncate">Haryanto Putro</h4>
-                            <p id="user-role-title" class="text-3xs text-slate-400 truncate font-medium">Super Administrator</p>
+                            <p id="user-role-title" class="text-3xs text-slate-400 truncate font-medium">Super
+                                Administrator</p>
                         </div>
                     </div>
-                    <button onclick="showRoute('login')" class="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-red-600 hover:bg-red-50 rounded-xl transition-all"><i class="fa-solid fa-arrow-right-from-bracket text-sm"></i> Keluar Sistem</button>
+                    <button onclick="showRoute('login')"
+                        class="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-red-600 hover:bg-red-50 rounded-xl transition-all"><i
+                            class="fa-solid fa-arrow-right-from-bracket text-sm"></i> Keluar Sistem</button>
                 </div>
             </aside>
 
             <div class="flex-1 flex flex-col min-w-0 overflow-hidden relative">
-                
+
                 <header class="h-16 bg-white border-b border-slate-200 px-6 flex justify-between items-center shrink-0">
-                    <div id="topbar-context-title" class="text-sm font-bold text-slate-900">Sistem Pengelolaan Data Wali Siswa</div>
+                    <div id="topbar-context-title" class="text-sm font-bold text-slate-900">Sistem Pengelolaan Data Wali
+                        Siswa</div>
                     <div class="flex items-center gap-4 text-slate-500">
                         <div class="relative w-64 hidden sm:block">
-                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-2xs"><i class="fa-solid fa-magnifying-glass"></i></span>
-                            <input type="text" class="w-full pl-8 pr-4 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-2xs outline-none focus:border-blue-500 focus:bg-white" placeholder="Cari data wali atau siswa...">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-2xs"><i
+                                    class="fa-solid fa-magnifying-glass"></i></span>
+                            <input type="text"
+                                class="w-full pl-8 pr-4 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-2xs outline-none focus:border-blue-500 focus:bg-white"
+                                placeholder="Cari data wali atau siswa...">
                         </div>
-                        <button onclick="switchTab('notifikasi')" class="relative w-8 h-8 flex items-center justify-center hover:bg-slate-100 rounded-full transition-all text-sm"><i class="fa-regular fa-bell"></i><span class="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-red-500 rounded-full"></span></button>
-                        <button class="w-8 h-8 flex items-center justify-center hover:bg-slate-100 rounded-full transition-all text-sm"><i class="fa-solid fa-gear"></i></button>
+                        <button onclick="switchTab('notifikasi')"
+                            class="relative w-8 h-8 flex items-center justify-center hover:bg-slate-100 rounded-full transition-all text-sm"><i
+                                class="fa-regular fa-bell"></i><span
+                                class="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-red-500 rounded-full"></span></button>
+                        <button
+                            class="w-8 h-8 flex items-center justify-center hover:bg-slate-100 rounded-full transition-all text-sm"><i
+                                class="fa-solid fa-gear"></i></button>
                     </div>
                 </header>
 
@@ -154,122 +256,567 @@
 
                     <div id="page-admin-dashboard" class="page-view hidden space-y-6">
                         <div class="flex justify-between items-center">
-                            <div><div class="text-3xs text-slate-400 font-bold uppercase tracking-wider mb-0.5">Dashboard &rarr; Overview</div><h2 class="text-xl font-bold text-slate-900">Ringkasan Eksekutif Sistem</h2></div>
-                            <div class="flex gap-2"><button class="bg-blue-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl shadow-xs hover:bg-blue-800" onclick="switchTab('admin-relasi')"><i class="fa-solid fa-plus text-3xs mr-1"></i> Tambah Relasi</button><button class="bg-white border border-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-xl shadow-2xs hover:bg-slate-50" onclick="switchTab('admin-laporan')"><i class="fa-solid fa-file-invoice text-3xs mr-1"></i> Buat Relasi</button></div>
+                            <div>
+                                <div class="text-3xs text-slate-400 font-bold uppercase tracking-wider mb-0.5">Dashboard
+                                    &rarr; Overview</div>
+                                <h2 class="text-xl font-bold text-slate-900">Ringkasan Eksekutif Sistem</h2>
+                            </div>
+                            <div id="dashboard-action-buttons" class="flex gap-2"><button
+                                    class="bg-blue-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl shadow-xs hover:bg-blue-800"
+                                    onclick="switchTab('admin-relasi')"><i class="fa-solid fa-plus text-3xs mr-1"></i>
+                                    Tambah Relasi</button><button
+                                    class="bg-white border border-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-xl shadow-2xs hover:bg-slate-50"
+                                    onclick="switchTab('admin-laporan')"><i
+                                        class="fa-solid fa-file-invoice text-3xs mr-1"></i> Buat Laporan</button></div>
                         </div>
                         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                            <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-2xs flex justify-between items-start"><div><p class="text-3xs font-bold text-slate-400 uppercase">Total Wali</p><h3 id="stat-total-wali" class="text-xl font-black text-slate-900 mt-1">-</h3><span class="text-3xs font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-md mt-2 inline-block">+12%</span></div><div class="w-9 h-9 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-sm"><i class="fa-solid fa-user-tie"></i></div></div>
-                            <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-2xs flex justify-between items-start"><div><p class="text-3xs font-bold text-slate-400 uppercase">Total Siswa</p><h3 id="stat-total-siswa" class="text-xl font-black text-slate-900 mt-1">-</h3><span class="text-3xs font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-md mt-2 inline-block">+4%</span></div><div class="w-9 h-9 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center text-sm"><i class="fa-solid fa-user-graduate"></i></div></div>
-                            <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-2xs flex justify-between items-start"><div><p class="text-3xs font-bold text-slate-400 uppercase">Total Relasi</p><h3 id="stat-total-relasi" class="text-xl font-black text-slate-900 mt-1">-</h3><span class="text-3xs font-bold text-slate-400 bg-slate-50 px-1.5 py-0.5 rounded-md mt-2 inline-block">0%</span></div><div class="w-9 h-9 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-sm"><i class="fa-solid fa-link"></i></div></div>
-                            <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-2xs flex justify-between items-start"><div><p class="text-3xs font-bold text-slate-400 uppercase">Total Notifikasi</p><h3 id="stat-total-notif" class="text-xl font-black text-slate-900 mt-1">-</h3><span id="stat-notif-baru" class="text-3xs font-bold text-red-600 bg-red-50 px-1.5 py-0.5 rounded-md mt-2 inline-block">- Baru</span></div><div class="w-9 h-9 bg-red-50 text-red-600 rounded-xl flex items-center justify-center text-sm"><i class="fa-regular fa-bell"></i></div></div>
+                            <div
+                                class="bg-white border border-slate-200 p-5 rounded-2xl shadow-2xs flex justify-between items-start">
+                                <div>
+                                    <p class="text-3xs font-bold text-slate-400 uppercase">Total Wali</p>
+                                    <h3 id="stat-total-wali" class="text-xl font-black text-slate-900 mt-1">-</h3><span
+                                        class="text-3xs font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-md mt-2 inline-block">+12%</span>
+                                </div>
+                                <div
+                                    class="w-9 h-9 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-sm">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                </div>
+                            </div>
+                            <div
+                                class="bg-white border border-slate-200 p-5 rounded-2xl shadow-2xs flex justify-between items-start">
+                                <div>
+                                    <p class="text-3xs font-bold text-slate-400 uppercase">Total Siswa</p>
+                                    <h3 id="stat-total-siswa" class="text-xl font-black text-slate-900 mt-1">-</h3><span
+                                        class="text-3xs font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-md mt-2 inline-block">+4%</span>
+                                </div>
+                                <div
+                                    class="w-9 h-9 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center text-sm">
+                                    <i class="fa-solid fa-user-graduate"></i>
+                                </div>
+                            </div>
+                            <div
+                                class="bg-white border border-slate-200 p-5 rounded-2xl shadow-2xs flex justify-between items-start">
+                                <div>
+                                    <p class="text-3xs font-bold text-slate-400 uppercase">Total Relasi</p>
+                                    <h3 id="stat-total-relasi" class="text-xl font-black text-slate-900 mt-1">-</h3>
+                                    <span
+                                        class="text-3xs font-bold text-slate-400 bg-slate-50 px-1.5 py-0.5 rounded-md mt-2 inline-block">0%</span>
+                                </div>
+                                <div
+                                    class="w-9 h-9 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-sm">
+                                    <i class="fa-solid fa-link"></i>
+                                </div>
+                            </div>
+                            <div
+                                class="bg-white border border-slate-200 p-5 rounded-2xl shadow-2xs flex justify-between items-start">
+                                <div>
+                                    <p class="text-3xs font-bold text-slate-400 uppercase">Total Notifikasi</p>
+                                    <h3 id="stat-total-notif" class="text-xl font-black text-slate-900 mt-1">-</h3><span
+                                        id="stat-notif-baru"
+                                        class="text-3xs font-bold text-red-600 bg-red-50 px-1.5 py-0.5 rounded-md mt-2 inline-block">-
+                                        Baru</span>
+                                </div>
+                                <div
+                                    class="w-9 h-9 bg-red-50 text-red-600 rounded-xl flex items-center justify-center text-sm">
+                                    <i class="fa-regular fa-bell"></i>
+                                </div>
+                            </div>
                         </div>
                         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            <div class="lg:col-span-2 bg-white border border-slate-200 rounded-2xl shadow-2xs overflow-hidden">
-                                <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-white"><h4 class="font-bold text-slate-900 text-sm">Data Wali Terbaru</h4><button class="text-blue-600 text-2xs font-bold hover:underline">Lihat Semua</button></div>
-                                <div class="overflow-x-auto"><table class="w-full text-left text-xs"><thead class="bg-slate-50 text-3xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100"><tr><th class="px-4 py-3">Nama Wali</th><th class="px-4 py-3">Pekerjaan</th><th class="px-4 py-3">Status</th><th class="px-4 py-3 text-center">Aksi</th></tr></thead><tbody class="divide-y divide-slate-100 font-medium text-slate-700">
-                                    <tr class="hover:bg-slate-50/50"><td class="px-4 py-3 flex items-center gap-2"><div class="w-7 h-7 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center font-bold text-3xs">AS</div><div><p class="font-bold text-slate-900">Andi Saputra</p><p class="text-3xs text-slate-400 font-normal">andi.s@email.com</p></div></td><td class="px-4 py-3">Wiraswasta</td><td class="px-4 py-3"><span class="bg-emerald-50 text-emerald-600 text-3xs font-bold px-2 py-0.5 rounded">Terverifikasi</span></td><td class="px-4 py-3 text-center"><button class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-ellipsis-vertical"></i></button></td></tr>
-                                    <tr class="hover:bg-slate-50/50"><td class="px-4 py-3 flex items-center gap-2"><div class="w-7 h-7 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center font-bold text-3xs">BR</div><div><p class="font-bold text-slate-900">Budi Raharjo</p><p class="text-3xs text-slate-400 font-normal">budi.r@email.com</p></div></td><td class="px-4 py-3">PNS</td><td class="px-4 py-3"><span class="bg-amber-50 text-amber-600 text-3xs font-bold px-2 py-0.5 rounded">Pending</span></td><td class="px-4 py-3 text-center"><button class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-ellipsis-vertical"></i></button></td></tr>
-                                    <tr class="hover:bg-slate-50/50"><td class="px-4 py-3 flex items-center gap-2"><div class="w-7 h-7 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center font-bold text-3xs">CH</div><div><p class="font-bold text-slate-900">Citra Hapsari</p><p class="text-3xs text-slate-400 font-normal">citra.h@email.com</p></div></td><td class="px-4 py-3">Dokter</td><td class="px-4 py-3"><span class="bg-emerald-50 text-emerald-600 text-3xs font-bold px-2 py-0.5 rounded">Terverifikasi</span></td><td class="px-4 py-3 text-center"><button class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-ellipsis-vertical"></i></button></td></tr>
-                                </tbody></table></div>
+                            <div
+                                class="lg:col-span-2 bg-white border border-slate-200 rounded-2xl shadow-2xs overflow-hidden">
+                                <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-white">
+                                    <h4 class="font-bold text-slate-900 text-sm">Data Wali Terbaru</h4><button
+                                        class="text-blue-600 text-2xs font-bold hover:underline">Lihat Semua</button>
+                                </div>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-left text-xs">
+                                        <thead
+                                            class="bg-slate-50 text-3xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100">
+                                            <tr>
+                                                <th class="px-4 py-3">Nama Wali</th>
+                                                <th class="px-4 py-3">Pekerjaan</th>
+                                                <th class="px-4 py-3">Status</th>
+                                                <th class="px-4 py-3 text-center">Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-slate-100 font-medium text-slate-700">
+                                            <tr class="hover:bg-slate-50/50">
+                                                <td class="px-4 py-3 flex items-center gap-2">
+                                                    <div
+                                                        class="w-7 h-7 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center font-bold text-3xs">
+                                                        AS</div>
+                                                    <div>
+                                                        <p class="font-bold text-slate-900">Andi Saputra</p>
+                                                        <p class="text-3xs text-slate-400 font-normal">andi.s@email.com
+                                                        </p>
+                                                    </div>
+                                                </td>
+                                                <td class="px-4 py-3">Wiraswasta</td>
+                                                <td class="px-4 py-3"><span
+                                                        class="bg-emerald-50 text-emerald-600 text-3xs font-bold px-2 py-0.5 rounded">Terverifikasi</span>
+                                                </td>
+                                                <td class="px-4 py-3 text-center"><button
+                                                        class="text-slate-400 hover:text-slate-600"><i
+                                                            class="fa-solid fa-ellipsis-vertical"></i></button></td>
+                                            </tr>
+                                            <tr class="hover:bg-slate-50/50">
+                                                <td class="px-4 py-3 flex items-center gap-2">
+                                                    <div
+                                                        class="w-7 h-7 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center font-bold text-3xs">
+                                                        BR</div>
+                                                    <div>
+                                                        <p class="font-bold text-slate-900">Budi Raharjo</p>
+                                                        <p class="text-3xs text-slate-400 font-normal">budi.r@email.com
+                                                        </p>
+                                                    </div>
+                                                </td>
+                                                <td class="px-4 py-3">PNS</td>
+                                                <td class="px-4 py-3"><span
+                                                        class="bg-amber-50 text-amber-600 text-3xs font-bold px-2 py-0.5 rounded">Pending</span>
+                                                </td>
+                                                <td class="px-4 py-3 text-center"><button
+                                                        class="text-slate-400 hover:text-slate-600"><i
+                                                            class="fa-solid fa-ellipsis-vertical"></i></button></td>
+                                            </tr>
+                                            <tr class="hover:bg-slate-50/50">
+                                                <td class="px-4 py-3 flex items-center gap-2">
+                                                    <div
+                                                        class="w-7 h-7 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center font-bold text-3xs">
+                                                        CH</div>
+                                                    <div>
+                                                        <p class="font-bold text-slate-900">Citra Hapsari</p>
+                                                        <p class="text-3xs text-slate-400 font-normal">citra.h@email.com
+                                                        </p>
+                                                    </div>
+                                                </td>
+                                                <td class="px-4 py-3">Dokter</td>
+                                                <td class="px-4 py-3"><span
+                                                        class="bg-emerald-50 text-emerald-600 text-3xs font-bold px-2 py-0.5 rounded">Terverifikasi</span>
+                                                </td>
+                                                <td class="px-4 py-3 text-center"><button
+                                                        class="text-slate-400 hover:text-slate-600"><i
+                                                            class="fa-solid fa-ellipsis-vertical"></i></button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-2xs space-y-4">
                                 <h4 class="font-bold text-slate-900 text-sm">Aktivitas Terkini</h4>
-                                <div class="space-y-3 font-medium text-xs text-slate-600 relative border-l border-slate-100 pl-4 ml-2">
-                                    <div class="relative mb-2"><span class="absolute -left-6 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white mt-0.5"></span><p class="font-bold text-slate-900">Wali Siswa Baru Terdaftar</p><p class="text-3xs text-slate-400">Bpk. Kurniawan • 2 menit yang lalu</p></div>
-                                    <div class="relative mb-2"><span class="absolute -left-6 w-3 h-3 bg-blue-500 rounded-full border-2 border-white mt-0.5"></span><p class="font-bold text-slate-900">Relasi Diperbarui</p><p class="text-3xs text-slate-400">Siswa A dengan Wali B • 15 menit yang lalu</p></div>
-                                    <div class="relative mb-2"><span class="absolute -left-6 w-3 h-3 bg-amber-500 rounded-full border-2 border-white mt-0.5"></span><p class="font-bold text-slate-900">Verifikasi Wali Pending</p><p class="text-3xs text-slate-400">Ibu Sari • 1 jam yang lalu</p></div>
+                                <div
+                                    class="space-y-3 font-medium text-xs text-slate-600 relative border-l border-slate-100 pl-4 ml-2">
+                                    <div class="relative mb-2"><span
+                                            class="absolute -left-6 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white mt-0.5"></span>
+                                        <p class="font-bold text-slate-900">Wali Siswa Baru Terdaftar</p>
+                                        <p class="text-3xs text-slate-400">Bpk. Kurniawan • 2 menit yang lalu</p>
+                                    </div>
+                                    <div class="relative mb-2"><span
+                                            class="absolute -left-6 w-3 h-3 bg-blue-500 rounded-full border-2 border-white mt-0.5"></span>
+                                        <p class="font-bold text-slate-900">Relasi Diperbarui</p>
+                                        <p class="text-3xs text-slate-400">Siswa A dengan Wali B • 15 menit yang lalu
+                                        </p>
+                                    </div>
+                                    <div class="relative mb-2"><span
+                                            class="absolute -left-6 w-3 h-3 bg-amber-500 rounded-full border-2 border-white mt-0.5"></span>
+                                        <p class="font-bold text-slate-900">Verifikasi Wali Pending</p>
+                                        <p class="text-3xs text-slate-400">Ibu Sari • 1 jam yang lalu</p>
+                                    </div>
                                 </div>
-                                <button class="w-full bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-bold py-2 rounded-xl border border-slate-100">Lihat Log Lengkap</button>
+                                <button
+                                    class="w-full bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-bold py-2 rounded-xl border border-slate-100">Lihat
+                                    Log Lengkap</button>
                             </div>
                         </div>
                     </div>
 
                     <div id="page-admin-siswa" class="page-view hidden space-y-6">
-                        <div><div class="text-3xs text-slate-400 font-bold uppercase tracking-wider mb-0.5">Sistem Pengelolaan Data Wali Siswa</div><h2 class="text-xl font-bold text-slate-900">Kelola Data Siswa</h2><p class="text-xs text-slate-400">Manajemen basis data akademik dan informasi kependudukan siswa.</p></div>
+                        <div>
+                            <div class="text-3xs text-slate-400 font-bold uppercase tracking-wider mb-0.5">Sistem
+                                Pengelolaan Data Wali Siswa</div>
+                            <h2 class="text-xl font-bold text-slate-900">Kelola Data Siswa</h2>
+                            <p class="text-xs text-slate-400">Manajemen basis data akademik dan informasi kependudukan
+                                siswa.</p>
+                        </div>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-3xs flex items-center gap-3"><div class="w-8 h-8 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center text-xs"><i class="fa-solid fa-users"></i></div><div><p class="text-3xs font-bold text-slate-400 uppercase">Total Siswa</p><p id="siswa-stat-total" class="text-sm font-black text-slate-900">-</p></div></div>
-                            <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-3xs flex items-center gap-3"><div class="w-8 h-8 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center text-xs"><i class="fa-solid fa-circle-check"></i></div><div><p class="text-3xs font-bold text-slate-400 uppercase">Status Aktif</p><p id="siswa-stat-aktif" class="text-sm font-black text-slate-900">-</p></div></div>
-                            <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-3xs flex items-center gap-3"><div class="w-8 h-8 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center text-xs"><i class="fa-solid fa-comment-dots"></i></div><div><p class="text-3xs font-bold text-slate-400 uppercase">Menunggu Verifikasi</p><p id="siswa-stat-verifikasi" class="text-sm font-black text-slate-900">-</p></div></div>
-                            <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-3xs flex items-center gap-3"><div class="w-8 h-8 bg-red-50 text-red-600 rounded-lg flex items-center justify-center text-xs"><i class="fa-solid fa-user-slash"></i></div><div><p class="text-3xs font-bold text-slate-400 uppercase">Alumni / Pindah</p><p id="siswa-stat-alumni" class="text-sm font-black text-slate-900">-</p></div></div>
+                            <div
+                                class="bg-white border border-slate-200 p-4 rounded-xl shadow-3xs flex items-center gap-3">
+                                <div
+                                    class="w-8 h-8 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center text-xs">
+                                    <i class="fa-solid fa-users"></i>
+                                </div>
+                                <div>
+                                    <p class="text-3xs font-bold text-slate-400 uppercase">Total Siswa</p>
+                                    <p id="siswa-stat-total" class="text-sm font-black text-slate-900">-</p>
+                                </div>
+                            </div>
+                            <div
+                                class="bg-white border border-slate-200 p-4 rounded-xl shadow-3xs flex items-center gap-3">
+                                <div
+                                    class="w-8 h-8 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center text-xs">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </div>
+                                <div>
+                                    <p class="text-3xs font-bold text-slate-400 uppercase">Status Aktif</p>
+                                    <p id="siswa-stat-aktif" class="text-sm font-black text-slate-900">-</p>
+                                </div>
+                            </div>
+                            <div
+                                class="bg-white border border-slate-200 p-4 rounded-xl shadow-3xs flex items-center gap-3">
+                                <div
+                                    class="w-8 h-8 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center text-xs">
+                                    <i class="fa-solid fa-comment-dots"></i>
+                                </div>
+                                <div>
+                                    <p class="text-3xs font-bold text-slate-400 uppercase">Menunggu Verifikasi</p>
+                                    <p id="siswa-stat-verifikasi" class="text-sm font-black text-slate-900">-</p>
+                                </div>
+                            </div>
+                            <div
+                                class="bg-white border border-slate-200 p-4 rounded-xl shadow-3xs flex items-center gap-3">
+                                <div
+                                    class="w-8 h-8 bg-red-50 text-red-600 rounded-lg flex items-center justify-center text-xs">
+                                    <i class="fa-solid fa-user-slash"></i>
+                                </div>
+                                <div>
+                                    <p class="text-3xs font-bold text-slate-400 uppercase">Alumni / Pindah</p>
+                                    <p id="siswa-stat-alumni" class="text-sm font-black text-slate-900">-</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="bg-white border border-slate-200 rounded-2xl shadow-2xs overflow-hidden">
-                            <div class="p-4 border-b border-slate-100 flex flex-wrap gap-3 justify-between items-center bg-white">
-                                <div class="flex gap-2 text-2xs font-semibold"><select class="px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl outline-none"><option>Filter Kelas: Semua Kelas</option></select><select class="px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl outline-none"><option>Urutkan: Terbaru</option></select></div>
-                                <button class="text-slate-600 border border-slate-200 rounded-xl text-2xs font-bold px-3 py-1.5 hover:bg-slate-50 shadow-3xs"><i class="fa-solid fa-download mr-1 text-slate-400"></i> Export PDF/Excel</button>
+                            <div
+                                class="p-4 border-b border-slate-100 flex flex-wrap gap-3 justify-between items-center bg-white">
+                                <div class="flex gap-2 text-2xs font-semibold"><select
+                                        class="px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl outline-none">
+                                        <option>Filter Kelas: Semua Kelas</option>
+                                    </select><select
+                                        class="px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl outline-none">
+                                        <option>Urutkan: Terbaru</option>
+                                    </select></div>
+                                <button
+                                    class="text-slate-600 border border-slate-200 rounded-xl text-2xs font-bold px-3 py-1.5 hover:bg-slate-50 shadow-3xs"><i
+                                        class="fa-solid fa-download mr-1 text-slate-400"></i> Export PDF/Excel</button>
                             </div>
-                            <div class="overflow-x-auto"><table class="w-full text-left text-xs"><thead class="bg-slate-50 text-3xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100"><tr><th class="px-6 py-3.5">NISN</th><th class="px-6 py-3.5">Nama Siswa</th><th class="px-6 py-3.5">Kelas</th><th class="px-6 py-3.5">Jenis Kelamin</th><th class="px-6 py-3.5">Status</th><th class="px-6 py-3.5 text-center">Aksi</th></tr></thead><tbody class="divide-y divide-slate-100 font-medium text-slate-700">
-                                <tr class="hover:bg-slate-50/40"><td class="px-6 py-3.5 text-blue-600 font-bold hover:underline cursor-pointer" onclick="switchTab('profil-siswa')">0082415521</td><td class="px-6 py-3.5 flex items-center gap-2.5"><div class="w-6 h-6 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center text-3xs font-bold">AS</div>Aditama Saputra</td><td class="px-6 py-3.5">XII - MIPA 1</td><td class="px-6 py-3.5">Laki-laki</td><td class="px-6 py-3.5"><span class="bg-emerald-50 text-emerald-600 text-3xs font-bold px-2 py-0.5 rounded-full">Aktif</span></td><td class="px-6 py-3.5 text-center text-slate-400 text-sm"><button class="hover:text-blue-600 mx-1"><i class="fa-regular fa-eye"></i></button><button class="hover:text-amber-500 mx-1"><i class="fa-regular fa-pen-to-square"></i></button><button class="hover:text-red-600 mx-1"><i class="fa-regular fa-trash-can"></i></button></td></tr>
-                                <tr class="hover:bg-slate-50/40"><td class="px-6 py-3.5 text-blue-600 font-bold hover:underline cursor-pointer" onclick="switchTab('profil-siswa')">0091223405</td><td class="px-6 py-3.5 flex items-center gap-2.5"><div class="w-6 h-6 bg-purple-100 text-purple-700 rounded-full flex items-center justify-center text-3xs font-bold">BN</div>Bella Nurhaliza</td><td class="px-6 py-3.5">XI - IPS 2</td><td class="px-6 py-3.5">Perempuan</td><td class="px-6 py-3.5"><span class="bg-emerald-50 text-emerald-600 text-3xs font-bold px-2 py-0.5 rounded-full">Aktif</span></td><td class="px-6 py-3.5 text-center text-slate-400 text-sm"><button class="hover:text-blue-600 mx-1"><i class="fa-regular fa-eye"></i></button><button class="hover:text-amber-500 mx-1"><i class="fa-regular fa-pen-to-square"></i></button><button class="hover:text-red-600 mx-1"><i class="fa-regular fa-trash-can"></i></button></td></tr>
-                                <tr class="hover:bg-slate-50/40"><td class="px-6 py-3.5 text-blue-600 font-bold hover:underline cursor-pointer" onclick="switchTab('profil-siswa')">0076610092</td><td class="px-6 py-3.5 flex items-center gap-2.5"><div class="w-6 h-6 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center text-3xs font-bold">FR</div>Fahri Ramadhan</td><td class="px-6 py-3.5">X - MIPA 3</td><td class="px-6 py-3.5">Laki-laki</td><td class="px-6 py-3.5"><span class="bg-amber-50 text-amber-600 text-3xs font-bold px-2 py-0.5 rounded-full">Verifikasi</span></td><td class="px-6 py-3.5 text-center text-slate-400 text-sm"><button class="hover:text-blue-600 mx-1"><i class="fa-regular fa-eye"></i></button><button class="hover:text-amber-500 mx-1"><i class="fa-regular fa-pen-to-square"></i></button><button class="hover:text-red-600 mx-1"><i class="fa-regular fa-trash-can"></i></button></td></tr>
-                            </tbody></table></div>
-                            <div class="p-4 bg-blue-50/60 border-t border-slate-100 flex flex-wrap gap-3 justify-between items-center text-xs text-blue-800"><div class="flex items-center gap-2"><i class="fa-solid fa-circle-info text-blue-500"></i><p><span class="font-bold">Pengingat Sinkronisasi:</span> Data siswa terakhir disinkronkan dengan Dapodik 4 jam yang lalu.</p></div><button class="bg-blue-800 text-white font-bold px-3 py-1.5 rounded-xl text-3xs hover:bg-blue-900 shadow-xs">Sinkronkan Sekarang</button></div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-xs">
+                                    <thead
+                                        class="bg-slate-50 text-3xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100">
+                                        <tr>
+                                            <th class="px-6 py-3.5">NISN</th>
+                                            <th class="px-6 py-3.5">Nama Siswa</th>
+                                            <th class="px-6 py-3.5">Kelas</th>
+                                            <th class="px-6 py-3.5">Jenis Kelamin</th>
+                                            <th class="px-6 py-3.5">Status</th>
+                                            <th class="px-6 py-3.5 text-center">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100 font-medium text-slate-700">
+                                        <tr class="hover:bg-slate-50/40">
+                                            <td class="px-6 py-3.5 text-blue-600 font-bold hover:underline cursor-pointer"
+                                                onclick="switchTab('profil-siswa')">0082415521</td>
+                                            <td class="px-6 py-3.5 flex items-center gap-2.5">
+                                                <div
+                                                    class="w-6 h-6 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center text-3xs font-bold">
+                                                    AS</div>Aditama Saputra
+                                            </td>
+                                            <td class="px-6 py-3.5">XII - MIPA 1</td>
+                                            <td class="px-6 py-3.5">Laki-laki</td>
+                                            <td class="px-6 py-3.5"><span
+                                                    class="bg-emerald-50 text-emerald-600 text-3xs font-bold px-2 py-0.5 rounded-full">Aktif</span>
+                                            </td>
+                                            <td class="px-6 py-3.5 text-center text-slate-400 text-sm"><button
+                                                    class="hover:text-blue-600 mx-1"><i
+                                                        class="fa-regular fa-eye"></i></button><button
+                                                    class="hover:text-amber-500 mx-1"><i
+                                                        class="fa-regular fa-pen-to-square"></i></button><button
+                                                    class="hover:text-red-600 mx-1"><i
+                                                        class="fa-regular fa-trash-can"></i></button></td>
+                                        </tr>
+                                        <tr class="hover:bg-slate-50/40">
+                                            <td class="px-6 py-3.5 text-blue-600 font-bold hover:underline cursor-pointer"
+                                                onclick="switchTab('profil-siswa')">0091223405</td>
+                                            <td class="px-6 py-3.5 flex items-center gap-2.5">
+                                                <div
+                                                    class="w-6 h-6 bg-purple-100 text-purple-700 rounded-full flex items-center justify-center text-3xs font-bold">
+                                                    BN</div>Bella Nurhaliza
+                                            </td>
+                                            <td class="px-6 py-3.5">XI - IPS 2</td>
+                                            <td class="px-6 py-3.5">Perempuan</td>
+                                            <td class="px-6 py-3.5"><span
+                                                    class="bg-emerald-50 text-emerald-600 text-3xs font-bold px-2 py-0.5 rounded-full">Aktif</span>
+                                            </td>
+                                            <td class="px-6 py-3.5 text-center text-slate-400 text-sm"><button
+                                                    class="hover:text-blue-600 mx-1"><i
+                                                        class="fa-regular fa-eye"></i></button><button
+                                                    class="hover:text-amber-500 mx-1"><i
+                                                        class="fa-regular fa-pen-to-square"></i></button><button
+                                                    class="hover:text-red-600 mx-1"><i
+                                                        class="fa-regular fa-trash-can"></i></button></td>
+                                        </tr>
+                                        <tr class="hover:bg-slate-50/40">
+                                            <td class="px-6 py-3.5 text-blue-600 font-bold hover:underline cursor-pointer"
+                                                onclick="switchTab('profil-siswa')">0076610092</td>
+                                            <td class="px-6 py-3.5 flex items-center gap-2.5">
+                                                <div
+                                                    class="w-6 h-6 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center text-3xs font-bold">
+                                                    FR</div>Fahri Ramadhan
+                                            </td>
+                                            <td class="px-6 py-3.5">X - MIPA 3</td>
+                                            <td class="px-6 py-3.5">Laki-laki</td>
+                                            <td class="px-6 py-3.5"><span
+                                                    class="bg-amber-50 text-amber-600 text-3xs font-bold px-2 py-0.5 rounded-full">Verifikasi</span>
+                                            </td>
+                                            <td class="px-6 py-3.5 text-center text-slate-400 text-sm"><button
+                                                    class="hover:text-blue-600 mx-1"><i
+                                                        class="fa-regular fa-eye"></i></button><button
+                                                    class="hover:text-amber-500 mx-1"><i
+                                                        class="fa-regular fa-pen-to-square"></i></button><button
+                                                    class="hover:text-red-600 mx-1"><i
+                                                        class="fa-regular fa-trash-can"></i></button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div
+                                class="p-4 bg-blue-50/60 border-t border-slate-100 flex flex-wrap gap-3 justify-between items-center text-xs text-blue-800">
+                                <div class="flex items-center gap-2"><i
+                                        class="fa-solid fa-circle-info text-blue-500"></i>
+                                    <p><span class="font-bold">Pengingat Sinkronisasi:</span> Data siswa terakhir
+                                        disinkronkan dengan Dapodik 4 jam yang lalu.</p>
+                                </div><button
+                                    class="bg-blue-800 text-white font-bold px-3 py-1.5 rounded-xl text-3xs hover:bg-blue-900 shadow-xs">Sinkronkan
+                                    Sekarang</button>
+                            </div>
                         </div>
                     </div>
 
                     <div id="page-admin-relasi" class="page-view hidden space-y-6">
-                        <div><div class="text-3xs text-slate-400 font-bold uppercase tracking-wider mb-0.5">Dashboard &rarr; Manajemen Relasi</div><h2 class="text-xl font-bold text-slate-900">Manajemen Relasi Siswa-Wali</h2><p class="text-xs text-slate-400">Hubungkan data siswa dengan orang tua atau wali penanggung jawab.</p></div>
+                        <div>
+                            <div class="text-3xs text-slate-400 font-bold uppercase tracking-wider mb-0.5">Dashboard
+                                &rarr; Manajemen Relasi</div>
+                            <h2 class="text-xl font-bold text-slate-900">Manajemen Relasi Siswa-Wali</h2>
+                            <p class="text-xs text-slate-400">Hubungkan data siswa dengan orang tua atau wali penanggung
+                                jawab.</p>
+                        </div>
                         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
                             <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-2xs space-y-4">
-                                <div class="flex items-center gap-2 border-b border-slate-100 pb-3 font-bold text-slate-900 text-sm"><i class="fa-solid fa-link text-blue-600"></i><h4>Tambah Relasi Baru</h4></div>
+                                <div
+                                    class="flex items-center gap-2 border-b border-slate-100 pb-3 font-bold text-slate-900 text-sm">
+                                    <i class="fa-solid fa-link text-blue-600"></i>
+                                    <h4>Tambah Relasi Baru</h4>
+                                </div>
                                 <form onsubmit="handleRelationAjaxSubmit(event)" class="space-y-4">
-                                    <div class="space-y-1"><label class="text-3xs font-bold text-slate-400 uppercase">Nama Siswa</label><select id="rel-siswa" required class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none bg-white"><option value="">Pilih Siswa</option><option value="Arkananta Rayyan">Arkananta Rayyan (NISN: 0098231456)</option><option value="Ahmad Faisal">Ahmad Faisal (NISN: 009283741)</option></select></div>
-                                    <div class="space-y-1"><label class="text-3xs font-bold text-slate-400 uppercase">Nama Wali</label><select id="rel-wali" required class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none bg-white"><option value="">Pilih Wali</option><option value="Bambang Wijaya">Bambang Wijaya (bambang@email.com)</option><option value="Drs. Mulyono">Drs. Mulyono (mulyono@email.com)</option></select></div>
+                                    <div class="space-y-1"><label
+                                            class="text-3xs font-bold text-slate-400 uppercase">Nama
+                                            Siswa</label><select id="rel-siswa" required
+                                            class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none bg-white">
+                                            <option value="">Pilih Siswa</option>
+                                            <option value="Arkananta Rayyan">Arkananta Rayyan (NISN: 0098231456)
+                                            </option>
+                                            <option value="Ahmad Faisal">Ahmad Faisal (NISN: 009283741)</option>
+                                        </select></div>
+                                    <div class="space-y-1"><label
+                                            class="text-3xs font-bold text-slate-400 uppercase">Nama Wali</label><select
+                                            id="rel-wali" required
+                                            class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none bg-white">
+                                            <option value="">Pilih Wali</option>
+                                            <option value="Bambang Wijaya">Bambang Wijaya (bambang@email.com)</option>
+                                            <option value="Drs. Mulyono">Drs. Mulyono (mulyono@email.com)</option>
+                                        </select></div>
                                     <div class="space-y-1">
                                         <label class="text-3xs font-bold text-slate-400 uppercase">Tipe Hubungan</label>
-                                        <div class="grid grid-cols-3 gap-2 text-center text-xs font-semibold"><label class="border border-slate-200 rounded-xl p-2 cursor-pointer hover:bg-slate-50 block"><input type="radio" name="rel-type" value="AYAH" checked class="hidden"> <span>Ayah</span></label><label class="border border-slate-200 rounded-xl p-2 cursor-pointer hover:bg-slate-50 block"><input type="radio" name="rel-type" value="IBU" class="hidden"> <span>Ibu</span></label><label class="border border-slate-200 rounded-xl p-2 cursor-pointer hover:bg-slate-50 block"><input type="radio" name="rel-type" value="WALI" class="hidden"> <span>Wali</span></label></div>
+                                        <div class="grid grid-cols-3 gap-2 text-center text-xs font-semibold"><label
+                                                class="border border-slate-200 rounded-xl p-2 cursor-pointer hover:bg-slate-50 block"><input
+                                                    type="radio" name="rel-type" value="AYAH" checked class="hidden">
+                                                <span>Ayah</span></label><label
+                                                class="border border-slate-200 rounded-xl p-2 cursor-pointer hover:bg-slate-50 block"><input
+                                                    type="radio" name="rel-type" value="IBU" class="hidden">
+                                                <span>Ibu</span></label><label
+                                                class="border border-slate-200 rounded-xl p-2 cursor-pointer hover:bg-slate-50 block"><input
+                                                    type="radio" name="rel-type" value="WALI" class="hidden">
+                                                <span>Wali</span></label></div>
                                     </div>
-                                    <div id="rel-ajax-loader" class="hidden p-3 bg-amber-50 border border-amber-200 rounded-xl text-3xs text-amber-800 flex items-center gap-2"><i class="fa-solid fa-circle-notch animate-spin text-amber-600 text-xs"></i><span>Triggering Email API: Menembak notifikasi ke alamat wali...</span></div>
-                                    <button type="submit" id="rel-submit-btn" class="w-full bg-blue-900 hover:bg-blue-950 text-white font-bold py-2 rounded-xl text-xs transition-all shadow-md flex items-center justify-center gap-2"><i class="fa-solid fa-floppy-disk text-2xs"></i> Simpan Relasi</button>
+                                    <div id="rel-ajax-loader"
+                                        class="hidden p-3 bg-amber-50 border border-amber-200 rounded-xl text-3xs text-amber-800 flex items-center gap-2">
+                                        <i
+                                            class="fa-solid fa-circle-notch animate-spin text-amber-600 text-xs"></i><span>Triggering
+                                            Email API: Menembak notifikasi ke alamat wali...</span>
+                                    </div>
+                                    <button type="submit" id="rel-submit-btn"
+                                        class="w-full bg-blue-900 hover:bg-blue-950 text-white font-bold py-2 rounded-xl text-xs transition-all shadow-md flex items-center justify-center gap-2"><i
+                                            class="fa-solid fa-floppy-disk text-2xs"></i> Simpan Relasi</button>
                                 </form>
-                                <div class="bg-blue-950 text-white p-4 rounded-xl space-y-2"><p class="text-2xs font-bold text-blue-300 uppercase">Quick Insights</p><div class="flex justify-between text-2xs"><span>Total Relasi Terdaftar</span><span class="font-bold">1,248</span></div><div class="flex justify-between text-2xs"><span>Siswa Belum Berelasi</span><span class="font-bold text-amber-400">32 Siswa</span></div></div>
+                                <div class="bg-blue-950 text-white p-4 rounded-xl space-y-2">
+                                    <p class="text-2xs font-bold text-blue-300 uppercase">Quick Insights</p>
+                                    <div class="flex justify-between text-2xs"><span>Total Relasi Terdaftar</span><span
+                                            class="font-bold">1,248</span></div>
+                                    <div class="flex justify-between text-2xs"><span>Siswa Belum Berelasi</span><span
+                                            class="font-bold text-amber-400">32 Siswa</span></div>
+                                </div>
                             </div>
-                            <div class="lg:col-span-2 bg-white border border-slate-200 rounded-2xl shadow-2xs overflow-hidden">
-                                <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-white"><h4 class="font-bold text-slate-900 text-sm">Data Relasi Aktif</h4><div class="relative w-48"><span class="absolute inset-y-0 left-0 flex items-center pl-2.5 text-slate-400 text-3xs"><i class="fa-solid fa-filter"></i></span><input type="text" class="w-full pl-7 pr-3 py-1 bg-slate-50 border border-slate-200 rounded-lg text-3xs outline-none" placeholder="Filter data..."></div></div>
-                                <div class="overflow-x-auto"><table class="w-full text-left text-xs"><thead class="bg-slate-50 text-3xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100"><tr><th class="px-4 py-3">Nama Siswa</th><th class="px-4 py-3">Nama Wali</th><th class="px-4 py-3">Tipe</th><th class="px-4 py-3">Status</th><th class="px-4 py-3 text-center">Aksi</th></tr></thead><tbody id="rel-table-body" class="divide-y divide-slate-100 font-medium text-slate-700">
-                                    <tr class="hover:bg-slate-50/50">
-                                        <td class="px-4 py-3"><p class="font-bold text-slate-900">Ahmad Faisal</p><p class="text-3xs text-slate-400 font-normal">NISN: 123456789</p></td>
-                                        <td class="px-4 py-3"><p>Drs. Mulyono</p><p class="text-3xs text-slate-400 font-normal">mulyono@email.com</p></td>
-                                        <td class="px-4 py-3"><span class="text-3xs font-bold bg-blue-50 text-blue-700 px-2 py-0.5 rounded">AYAH</span></td>
-                                        <td class="px-4 py-3"><span class="flex items-center gap-1 text-3xs text-emerald-600"><span class="w-1 h-1 bg-emerald-500 rounded-full"></span> Terverifikasi</span></td>
-                                        <td class="px-4 py-3 text-center text-slate-400"><button class="hover:text-blue-600 mx-1"><i class="fa-regular fa-pen-to-square"></i></button><button class="hover:text-red-600 mx-1"><i class="fa-regular fa-trash-can"></i></button></td>
-                                    </tr>
-                                </tbody></table></div>
+                            <div
+                                class="lg:col-span-2 bg-white border border-slate-200 rounded-2xl shadow-2xs overflow-hidden">
+                                <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-white">
+                                    <h4 class="font-bold text-slate-900 text-sm">Data Relasi Aktif</h4>
+                                    <div class="relative w-48"><span
+                                            class="absolute inset-y-0 left-0 flex items-center pl-2.5 text-slate-400 text-3xs"><i
+                                                class="fa-solid fa-filter"></i></span><input type="text"
+                                            class="w-full pl-7 pr-3 py-1 bg-slate-50 border border-slate-200 rounded-lg text-3xs outline-none"
+                                            placeholder="Filter data..."></div>
+                                </div>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-left text-xs">
+                                        <thead
+                                            class="bg-slate-50 text-3xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100">
+                                            <tr>
+                                                <th class="px-4 py-3">Nama Siswa</th>
+                                                <th class="px-4 py-3">Nama Wali</th>
+                                                <th class="px-4 py-3">Tipe</th>
+                                                <th class="px-4 py-3">Status</th>
+                                                <th class="px-4 py-3 text-center">Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="rel-table-body"
+                                            class="divide-y divide-slate-100 font-medium text-slate-700">
+                                            <tr class="hover:bg-slate-50/50">
+                                                <td class="px-4 py-3">
+                                                    <p class="font-bold text-slate-900">Ahmad Faisal</p>
+                                                    <p class="text-3xs text-slate-400 font-normal">NISN: 123456789</p>
+                                                </td>
+                                                <td class="px-4 py-3">
+                                                    <p>Drs. Mulyono</p>
+                                                    <p class="text-3xs text-slate-400 font-normal">mulyono@email.com</p>
+                                                </td>
+                                                <td class="px-4 py-3"><span
+                                                        class="text-3xs font-bold bg-blue-50 text-blue-700 px-2 py-0.5 rounded">AYAH</span>
+                                                </td>
+                                                <td class="px-4 py-3"><span
+                                                        class="flex items-center gap-1 text-3xs text-emerald-600"><span
+                                                            class="w-1 h-1 bg-emerald-500 rounded-full"></span>
+                                                        Terverifikasi</span></td>
+                                                <td class="px-4 py-3 text-center text-slate-400"><button
+                                                        class="hover:text-blue-600 mx-1"><i
+                                                            class="fa-regular fa-pen-to-square"></i></button><button
+                                                        class="hover:text-red-600 mx-1"><i
+                                                            class="fa-regular fa-trash-can"></i></button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div id="page-admin-laporan" class="page-view hidden space-y-6">
                         <div class="flex flex-wrap gap-4 justify-between items-center">
-                            <div><h2 class="text-xl font-bold text-slate-900">Laporan Data Wali Siswa</h2><p class="text-xs text-slate-400">Analisis komprehensif data perwalian dan keterlibatan orang tua.</p></div>
+                            <div>
+                                <h2 class="text-xl font-bold text-slate-900">Laporan Data Wali Siswa</h2>
+                                <p class="text-xs text-slate-400">Analisis komprehensif data perwalian dan keterlibatan
+                                    orang tua.</p>
+                            </div>
                         </div>
-                        <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-3xs flex flex-col sm:flex-row gap-4 items-end text-2xs font-bold text-slate-500">
-                            <div class="space-y-1 w-full sm:w-48"><p class="uppercase tracking-wider">Filter Kelas</p><select class="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl outline-none font-medium"><option>Semua Kelas</option></select></div>
-                            <div class="space-y-1 w-full sm:w-64"><p class="uppercase tracking-wider">Rentang Tanggal</p><div class="relative"><span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fa-regular fa-calendar"></i></span><input type="text" class="w-full pl-8 pr-4 py-1.5 bg-slate-50 border border-slate-200 rounded-xl outline-none font-medium" value="01 Jan 2026 - 31 Mar 2026"></div></div>
+                        <div
+                            class="bg-white border border-slate-200 p-4 rounded-xl shadow-3xs flex flex-col sm:flex-row gap-4 items-end text-2xs font-bold text-slate-500">
+                            <div class="space-y-1 w-full sm:w-48">
+                                <p class="uppercase tracking-wider">Filter Kelas</p><select
+                                    class="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl outline-none font-medium">
+                                    <option>Semua Kelas</option>
+                                </select>
+                            </div>
+                            <div class="space-y-1 w-full sm:w-64">
+                                <p class="uppercase tracking-wider">Rentang Tanggal</p>
+                                <div class="relative"><span
+                                        class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i
+                                            class="fa-regular fa-calendar"></i></span><input type="text"
+                                        class="w-full pl-8 pr-4 py-1.5 bg-slate-50 border border-slate-200 rounded-xl outline-none font-medium"
+                                        value="01 Jan 2026 - 31 Mar 2026"></div>
+                            </div>
                         </div>
                         <div class="bg-white border border-slate-200 rounded-2xl shadow-2xs overflow-hidden">
-                            <div class="p-4 bg-white border-b border-slate-100 flex justify-between items-center"><h4 class="font-bold text-slate-900 text-sm">Data Rinci Wali</h4></div>
-                            <div class="overflow-x-auto"><table class="w-full text-left text-xs"><thead class="bg-slate-50 text-3xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100"><tr><th class="px-4 py-3">Nama Wali</th><th class="px-4 py-3">Siswa Terkait</th><th class="px-4 py-3">Kelas</th><th class="px-4 py-3">Hubungan</th><th class="px-4 py-3">No. Telepon</th></tr></thead><tbody class="divide-y divide-slate-100 font-medium text-slate-700">
-                                <tr><td class="px-4 py-3"><p class="font-bold text-slate-900">Budi Pratama</p></td><td class="px-4 py-3">Aditya</td><td class="px-4 py-3">10 - IPA 1</td><td class="px-4 py-3"><span class="text-3xs font-bold bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded">AYAH</span></td><td class="px-4 py-3">0812-3456-7890</td></tr>
-                            </tbody></table></div>
+                            <div class="p-4 bg-white border-b border-slate-100 flex justify-between items-center">
+                                <h4 class="font-bold text-slate-900 text-sm">Data Rinci Wali</h4>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-xs">
+                                    <thead
+                                        class="bg-slate-50 text-3xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100">
+                                        <tr>
+                                            <th class="px-4 py-3">Nama Wali</th>
+                                            <th class="px-4 py-3">Siswa Terkait</th>
+                                            <th class="px-4 py-3">Kelas</th>
+                                            <th class="px-4 py-3">Hubungan</th>
+                                            <th class="px-4 py-3">No. Telepon</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100 font-medium text-slate-700">
+                                        <tr>
+                                            <td class="px-4 py-3">
+                                                <p class="font-bold text-slate-900">Budi Pratama</p>
+                                            </td>
+                                            <td class="px-4 py-3">Aditya</td>
+                                            <td class="px-4 py-3">10 - IPA 1</td>
+                                            <td class="px-4 py-3"><span
+                                                    class="text-3xs font-bold bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded">AYAH</span>
+                                            </td>
+                                            <td class="px-4 py-3">0812-3456-7890</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
 
                     <div id="page-parent-portal" class="page-view hidden space-y-6">
-                        <div><h2 class="text-xl font-bold text-slate-900">Selamat Datang, Bapak Budi Santoso</h2><p class="text-xs text-slate-400">Berikut adalah ringkasan informasi pendidikan putra-putri Anda hari ini.</p></div>
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-900">Selamat Datang, Bapak Budi Santoso</h2>
+                            <p class="text-xs text-slate-400">Berikut adalah ringkasan informasi pendidikan putra-putri
+                                Anda hari ini.</p>
+                        </div>
                         <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 items-start">
-                            <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-2xs text-center space-y-4">
-                                <div class="w-20 h-20 bg-slate-100 rounded-full overflow-hidden mx-auto border-2 border-white shadow-xs"><img src="https://i.pinimg.com/736x/e0/19/12/e01912803e7a415f4f118418c0302412.jpg" class="w-full h-full object-cover"></div>
-                                <div><h4 class="font-bold text-slate-900 text-sm">Budi Santoso</h4><p class="text-3xs text-slate-400">abdeeputra585@gmail.com</p></div>
-                                <button class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 rounded-xl text-xs transition-all shadow-xs" onclick="switchTab('profil-siswa')"><i class="fa-regular fa-pen-to-square mr-1"></i> Update Profil</button>
+                            <div
+                                class="bg-white border border-slate-200 p-5 rounded-2xl shadow-2xs text-center space-y-4">
+                                <div
+                                    class="w-20 h-20 bg-slate-100 rounded-full overflow-hidden mx-auto border-2 border-white shadow-xs">
+                                    <img src="https://i.pinimg.com/736x/e0/19/12/e01912803e7a415f4f118418c0302412.jpg"
+                                        class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 text-sm">Budi Santoso</h4>
+                                    <p class="text-3xs text-slate-400">abdeeputra585@gmail.com</p>
+                                </div>
+                                <button
+                                    class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 rounded-xl text-xs transition-all shadow-xs"
+                                    onclick="switchTab('profil-siswa')"><i class="fa-regular fa-pen-to-square mr-1"></i>
+                                    Update Profil</button>
                             </div>
-                            <div class="xl:col-span-2 bg-white border border-slate-200 p-6 rounded-2xl shadow-2xs flex flex-col sm:flex-row gap-6">
-                                <div class="w-full sm:w-1/3 bg-slate-100 rounded-xl overflow-hidden h-40 border"><img src="https://adityanataniel277-kece.github.io/WebsiteNathan/fotoku%20boloo_josjis.jpg" class="w-full h-full object-cover"></div>
+                            <div
+                                class="xl:col-span-2 bg-white border border-slate-200 p-6 rounded-2xl shadow-2xs flex flex-col sm:flex-row gap-6">
+                                <div class="w-full sm:w-1/3 bg-slate-100 rounded-xl overflow-hidden h-40 border"><img
+                                        src="https://adityanataniel277-kece.github.io/WebsiteNathan/fotoku%20boloo_josjis.jpg"
+                                        class="w-full h-full object-cover"></div>
                                 <div class="w-full sm:w-2/3 flex flex-col justify-between min-h-0">
-                                    <div class="flex justify-between items-start"><div><div class="text-4xs font-extrabold uppercase bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded tracking-wider">Nama Lengkap Anak</div><h3 class="text-base font-bold text-slate-900 mt-1">Aditya Pratama</h3></div></div>
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <div
+                                                class="text-4xs font-extrabold uppercase bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded tracking-wider">
+                                                Nama Lengkap Anak</div>
+                                            <h3 class="text-base font-bold text-slate-900 mt-1">Aditya Pratama</h3>
+                                        </div>
+                                    </div>
                                     <div class="grid grid-cols-3 gap-2 border-t pt-4 mt-4 text-center font-medium">
-                                        <div class="bg-blue-50/50 p-2 border border-blue-100 rounded-xl"><p class="text-4xs text-blue-500 font-bold uppercase">Kehadiran</p><p class="text-sm font-black text-blue-900 mt-0.5">98%</p></div>
-                                        <div class="bg-emerald-50/50 p-2 border border-emerald-100 rounded-xl"><p class="text-4xs text-emerald-500 font-bold uppercase">Rata Nilai</p><p class="text-sm font-black text-emerald-900 mt-0.5">88.5</p></div>
-                                        <div class="bg-amber-50/50 p-2 border border-amber-100 rounded-xl"><p class="text-4xs text-amber-500 font-bold uppercase">Tugas Selesai</p><p class="text-sm font-black text-amber-900 mt-0.5">12/12</p></div>
+                                        <div class="bg-blue-50/50 p-2 border border-blue-100 rounded-xl">
+                                            <p class="text-4xs text-blue-500 font-bold uppercase">Kehadiran</p>
+                                            <p class="text-sm font-black text-blue-900 mt-0.5">98%</p>
+                                        </div>
+                                        <div class="bg-emerald-50/50 p-2 border border-emerald-100 rounded-xl">
+                                            <p class="text-4xs text-emerald-500 font-bold uppercase">Rata Nilai</p>
+                                            <p class="text-sm font-black text-emerald-900 mt-0.5">88.5</p>
+                                        </div>
+                                        <div class="bg-amber-50/50 p-2 border border-amber-100 rounded-xl">
+                                            <p class="text-4xs text-amber-500 font-bold uppercase">Tugas Selesai</p>
+                                            <p class="text-sm font-black text-amber-900 mt-0.5">12/12</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -277,33 +824,65 @@
                     </div>
 
                     <div id="page-profil-siswa" class="page-view hidden space-y-6">
-                        <div class="flex flex-col sm:flex-row gap-4 justify-between items-start border-b border-slate-200 pb-4 bg-white -mx-6 -mt-6 p-6">
-                            <div class="flex items-center gap-1.5 text-2xs font-semibold text-slate-400"><span>Dashboard</span>&rarr;<span>Data Siswa</span>&rarr;<span class="text-slate-900 font-bold">Profil Siswa</span></div>
+                        <div
+                            class="flex flex-col sm:flex-row gap-4 justify-between items-start border-b border-slate-200 pb-4 bg-white -mx-6 -mt-6 p-6">
+                            <div class="flex items-center gap-1.5 text-2xs font-semibold text-slate-400">
+                                <span>Dashboard</span>&rarr;<span>Data Siswa</span>&rarr;<span
+                                    class="text-slate-900 font-bold">Profil Siswa</span>
+                            </div>
                         </div>
                         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-                            <div class="bg-white border border-slate-200 p-6 rounded-2xl text-center shadow-2xs space-y-4">
-                                <div class="w-24 h-24 bg-sky-50 rounded-full mx-auto overflow-hidden border-2 border-white shadow-md"><img src="https://adityanataniel277-kece.github.io/WebsiteNathan/fotoku%20boloo_josjis.jpg" class="w-full h-full object-cover"></div>
-                                <div><h3 class="text-lg font-bold text-slate-900">Abdee Mahardika P</h3><p class="text-3xs text-slate-400 font-medium mt-0.5">NIM: 322510015</p></div>
+                            <div
+                                class="bg-white border border-slate-200 p-6 rounded-2xl text-center shadow-2xs space-y-4">
+                                <div
+                                    class="w-24 h-24 bg-sky-50 rounded-full mx-auto overflow-hidden border-2 border-white shadow-md">
+                                    <img src="https://adityanataniel277-kece.github.io/WebsiteNathan/fotoku%20boloo_josjis.jpg"
+                                        class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-slate-900">Abdee Mahardika P</h3>
+                                    <p class="text-3xs text-slate-400 font-medium mt-0.5">NIM: 322510015</p>
+                                </div>
                             </div>
-                            <div class="lg:col-span-2 bg-white border border-slate-200 p-6 rounded-2xl shadow-2xs space-y-4">
-                                <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2"><i class="fa-solid fa-id-card text-blue-600"></i> Detail Informasi Pribadi</h3>
-                                <p class="text-xs font-semibold text-slate-700">Jl. kemirahan GG 2 NO 16 RT 02 RW 02 </p>
+                            <div
+                                class="lg:col-span-2 bg-white border border-slate-200 p-6 rounded-2xl shadow-2xs space-y-4">
+                                <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2"><i
+                                        class="fa-solid fa-id-card text-blue-600"></i> Detail Informasi Pribadi</h3>
+                                <p class="text-xs font-semibold text-slate-700">Jl. kemirahan GG 2 NO 16 RT 02 RW 02
+                                </p>
                             </div>
                         </div>
                     </div>
 
                     <div id="page-notifikasi" class="page-view hidden space-y-6">
-                        <div class="flex justify-between items-center"><div><h2 class="text-xl font-bold text-slate-900">Pusat Notifikasi</h2></div></div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h2 class="text-xl font-bold text-slate-900">Pusat Notifikasi</h2>
+                            </div>
+                        </div>
                         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
                             <div class="lg:col-span-2 space-y-4 font-medium text-xs text-slate-600">
-                                <div class="bg-white border-l-4 border-blue-600 p-4 border border-slate-200 rounded-r-2xl shadow-3xs flex gap-3"><div class="w-8 h-8 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center text-xs shrink-0"><i class="fa-solid fa-circle-exclamation"></i></div><div><h5 class="font-bold text-slate-900 text-sm">Verifikasi Data Berhasil</h5><p class="text-xs text-slate-500 mt-0.5">Data wali siswa atas nama Bapak Rahmad Hidayat telah berhasil diverifikasi.</p></div></div>
+                                <div
+                                    class="bg-white border-l-4 border-blue-600 p-4 border border-slate-200 rounded-r-2xl shadow-3xs flex gap-3">
+                                    <div
+                                        class="w-8 h-8 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center text-xs shrink-0">
+                                        <i class="fa-solid fa-circle-exclamation"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-bold text-slate-900 text-sm">Verifikasi Data Berhasil</h5>
+                                        <p class="text-xs text-slate-500 mt-0.5">Data wali siswa atas nama Bapak Rahmad
+                                            Hidayat telah berhasil diverifikasi.</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                 </div>
-                
-                <footer class="h-10 bg-white border-t border-slate-200 text-center flex items-center justify-center text-3xs font-bold tracking-wider text-slate-400 uppercase shrink-0">&copy; 2026 Sistem Pengelolaan Data Wali Siswa &bull; Version 1.2.0</footer>
+
+                <footer
+                    class="h-10 bg-white border-t border-slate-200 text-center flex items-center justify-center text-3xs font-bold tracking-wider text-slate-400 uppercase shrink-0">
+                    &copy; 2026 Sistem Pengelolaan Data Wali Siswa &bull; Version 1.2.0</footer>
 
             </div>
         </div>
@@ -312,4 +891,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
