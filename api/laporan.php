@@ -1,9 +1,4 @@
 <?php
-// ============================================
-// EduGuardian - API Laporan Data Wali Siswa
-// GET /api/laporan.php                → Semua data laporan
-// GET /api/laporan.php?kelas=X        → Filter per kelas
-// ============================================
 
 require_once __DIR__ . '/config.php';
 

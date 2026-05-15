@@ -1,9 +1,4 @@
 <?php
-// ============================================
-// EduGuardian - API Wali
-// GET /api/wali.php         → Daftar semua wali
-// GET /api/wali.php?id=1    → Detail satu wali
-// ============================================
 
 require_once __DIR__ . '/config.php';
 
@@ -12,7 +7,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 }
 
 if (isset($_GET['id'])) {
-    // Detail satu wali
     $id = (int)$_GET['id'];
     $sql = "SELECT w.*, u.email as user_email, u.role 
             FROM wali w 
@@ -31,7 +25,6 @@ if (isset($_GET['id'])) {
     $stmt->close();
 
 } else {
-    // Daftar semua wali
     $sql = "SELECT w.id, w.nama, w.email, w.telepon, w.pekerjaan, w.status, w.created_at 
             FROM wali w 
             ORDER BY w.created_at DESC";

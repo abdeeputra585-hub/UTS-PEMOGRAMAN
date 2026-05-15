@@ -1,12 +1,4 @@
 <?php
-// ============================================
-// EduGuardian - API Siswa (CRUD)
-// GET    /api/siswa.php           → Daftar semua siswa
-// GET    /api/siswa.php?id=1      → Detail satu siswa
-// POST   /api/siswa.php           → Tambah siswa baru
-// PUT    /api/siswa.php?id=1      → Update data siswa
-// DELETE /api/siswa.php?id=1      → Hapus siswa
-// ============================================
 
 require_once __DIR__ . '/config.php';
 
@@ -14,10 +6,8 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 switch ($method) {
 
-    // ======== GET: Daftar / Detail Siswa ========
     case 'GET':
         if (isset($_GET['id'])) {
-            // Detail satu siswa
             $id = (int)$_GET['id'];
             $sql = "SELECT s.*, 
                         GROUP_CONCAT(CONCAT(w.nama, '|', r.tipe, '|', w.email, '|', w.telepon) SEPARATOR ';;') as wali_info
@@ -37,7 +27,6 @@ switch ($method) {
 
             $siswa = $result->fetch_assoc();
 
-            // Parse wali info
             $waliList = [];
             if (!empty($siswa['wali_info'])) {
                 $waliItems = explode(';;', $siswa['wali_info']);
@@ -57,10 +46,8 @@ switch ($method) {
             sendResponse(['success' => true, 'data' => $siswa]);
             $stmt->close();
         } else {
-            // Daftar semua siswa
             $sql = "SELECT id, nisn, nama, kelas, jenis_kelamin, status, created_at FROM siswa ORDER BY created_at DESC";
             
-            // Filter kelas jika ada
             if (isset($_GET['kelas']) && !empty($_GET['kelas'])) {
                 $kelas = $conn->real_escape_string($_GET['kelas']);
                 $sql = "SELECT id, nisn, nama, kelas, jenis_kelamin, status, created_at FROM siswa WHERE kelas LIKE '%$kelas%' ORDER BY created_at DESC";
@@ -72,7 +59,6 @@ switch ($method) {
                 $siswaList[] = $row;
             }
 
-            // Hitung statistik
             $totalAktif = $conn->query("SELECT COUNT(*) as t FROM siswa WHERE status='Aktif'")->fetch_assoc()['t'];
             $totalVerifikasi = $conn->query("SELECT COUNT(*) as t FROM siswa WHERE status='Verifikasi'")->fetch_assoc()['t'];
             $totalAlumni = $conn->query("SELECT COUNT(*) as t FROM siswa WHERE status IN ('Alumni','Pindah')")->fetch_assoc()['t'];
@@ -90,7 +76,6 @@ switch ($method) {
         }
         break;
 
-    // ======== POST: Tambah Siswa Baru ========
     case 'POST':
         $input = getJsonInput();
 
@@ -116,7 +101,6 @@ switch ($method) {
         $stmt->close();
         break;
 
-    // ======== PUT: Update Data Siswa ========
     case 'PUT':
         if (!isset($_GET['id'])) {
             sendResponse(['success' => false, 'message' => 'ID siswa diperlukan'], 400);
@@ -155,7 +139,6 @@ switch ($method) {
         $stmt->close();
         break;
 
-    // ======== DELETE: Hapus Siswa ========
     case 'DELETE':
         if (!isset($_GET['id'])) {
             sendResponse(['success' => false, 'message' => 'ID siswa diperlukan'], 400);

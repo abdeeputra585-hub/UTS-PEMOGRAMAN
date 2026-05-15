@@ -222,9 +222,9 @@ function switchTab(tabId) {
 
     // Load data dari API sesuai tab
     if (tabId === 'admin-dashboard') loadDashboardData();
-    if (tabId === 'admin-siswa') loadSiswaData();
-    if (tabId === 'admin-relasi') loadRelasiData();
-    if (tabId === 'admin-laporan') loadLaporanData();
+    if (tabId === 'admin-siswa') { loadSiswaData(); initKelasFilter(); }
+    if (tabId === 'admin-relasi') { loadRelasiData(); setTimeout(initRelasiFilter, 300); }
+    if (tabId === 'admin-laporan') { loadLaporanData(); setTimeout(initLaporanKelasFilter, 300); }
     if (tabId === 'notifikasi') loadNotifikasiData();
 }
 
@@ -306,7 +306,7 @@ async function loadSiswaData() {
                 const statusClass = statusMap[s.status] || 'bg-slate-100 text-slate-600';
 
                 tbody.innerHTML += `<tr class="hover:bg-slate-50/40">
-                    <td class="px-6 py-3.5 text-blue-600 font-bold hover:underline cursor-pointer" onclick="switchTab('profil-siswa')">${s.nisn}</td>
+                    <td class="px-6 py-3.5 text-blue-600 font-bold hover:underline cursor-pointer" onclick="viewSiswa(${s.id})">${s.nisn}</td>
                     <td class="px-6 py-3.5 flex items-center gap-2.5">
                         <div class="w-6 h-6 bg-${color}-100 text-${color}-700 rounded-full flex items-center justify-center text-3xs font-bold">${initials}</div>${s.nama}
                     </td>
@@ -314,8 +314,8 @@ async function loadSiswaData() {
                     <td class="px-6 py-3.5">${s.jenis_kelamin}</td>
                     <td class="px-6 py-3.5"><span class="${statusClass} text-3xs font-bold px-2 py-0.5 rounded-full">${s.status}</span></td>
                     <td class="px-6 py-3.5 text-center text-slate-400 text-sm">
-                        <button class="hover:text-blue-600 mx-1"><i class="fa-regular fa-eye"></i></button>
-                        <button class="hover:text-amber-500 mx-1"><i class="fa-regular fa-pen-to-square"></i></button>
+                        <button class="hover:text-blue-600 mx-1" onclick="viewSiswa(${s.id})"><i class="fa-regular fa-eye"></i></button>
+                        <button class="hover:text-amber-500 mx-1" onclick="editSiswa(${s.id})"><i class="fa-regular fa-pen-to-square"></i></button>
                         <button class="hover:text-red-600 mx-1" onclick="deleteSiswa(${s.id})"><i class="fa-regular fa-trash-can"></i></button>
                     </td>
                 </tr>`;
@@ -518,3 +518,280 @@ async function loadNotifikasiData() {
         console.warn('Notifikasi API belum aktif:', err);
     }
 }
+
+// ======== PASSWORD TOGGLE ========
+function togglePasswordVisibility() {
+    const input = document.getElementById('login-password');
+    const icon = document.querySelector('#login-password ~ span i');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fa-regular fa-eye-slash';
+    } else {
+        input.type = 'password';
+        icon.className = 'fa-regular fa-eye';
+    }
+}
+
+// ======== SEARCH FUNCTIONALITY ========
+function initSearch() {
+    const searchInput = document.querySelector('header input[type="text"]');
+    if (!searchInput) return;
+    searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase().trim();
+        const currentPage = document.querySelector('.page-view:not(.hidden)');
+        if (!currentPage) return;
+        const rows = currentPage.querySelectorAll('table tbody tr');
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(query) || query === '' ? '' : 'none';
+        });
+    });
+}
+
+// ======== RADIO BUTTON VISUAL FEEDBACK ========
+function initRadioButtons() {
+    const radios = document.querySelectorAll('input[name="rel-type"]');
+    function updateRadioStyle() {
+        radios.forEach(r => {
+            const label = r.closest('label');
+            if (r.checked) {
+                label.className = 'border-2 border-blue-600 bg-blue-50 text-blue-700 rounded-xl p-2 cursor-pointer block text-center';
+            } else {
+                label.className = 'border border-slate-200 rounded-xl p-2 cursor-pointer hover:bg-slate-50 block';
+            }
+        });
+    }
+    radios.forEach(r => r.addEventListener('change', updateRadioStyle));
+    updateRadioStyle();
+}
+
+// ======== VIEW SISWA DETAIL ========
+function viewSiswa(id) {
+    switchTab('profil-siswa');
+    loadProfilSiswa(id);
+}
+
+async function loadProfilSiswa(id) {
+    try {
+        const res = await fetch(`${API_BASE}/siswa.php?id=${id}`);
+        const data = await res.json();
+        if (!data.success) return;
+        const s = data.data;
+        const page = document.getElementById('page-profil-siswa');
+        const profileCard = page.querySelector('.text-center');
+        if (profileCard) {
+            profileCard.querySelector('h3').textContent = s.nama;
+            profileCard.querySelector('p').textContent = 'NISN: ' + s.nisn;
+        }
+        const detailCard = page.querySelector('.lg\\:col-span-2');
+        if (detailCard) {
+            detailCard.innerHTML = `
+                <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2"><i class="fa-solid fa-id-card text-blue-600"></i> Detail Informasi Pribadi</h3>
+                <div class="grid grid-cols-2 gap-4 text-xs">
+                    <div><p class="text-3xs font-bold text-slate-400 uppercase">Nama Lengkap</p><p class="font-semibold text-slate-700 mt-1">${s.nama}</p></div>
+                    <div><p class="text-3xs font-bold text-slate-400 uppercase">NISN</p><p class="font-semibold text-slate-700 mt-1">${s.nisn}</p></div>
+                    <div><p class="text-3xs font-bold text-slate-400 uppercase">Kelas</p><p class="font-semibold text-slate-700 mt-1">${s.kelas}</p></div>
+                    <div><p class="text-3xs font-bold text-slate-400 uppercase">Jenis Kelamin</p><p class="font-semibold text-slate-700 mt-1">${s.jenis_kelamin}</p></div>
+                    <div><p class="text-3xs font-bold text-slate-400 uppercase">Status</p><p class="font-semibold text-slate-700 mt-1">${s.status}</p></div>
+                    <div><p class="text-3xs font-bold text-slate-400 uppercase">Alamat</p><p class="font-semibold text-slate-700 mt-1">${s.alamat || '-'}</p></div>
+                </div>
+                ${s.wali && s.wali.length > 0 ? `<h3 class="font-bold text-slate-900 text-sm flex items-center gap-2 mt-4"><i class="fa-solid fa-users text-purple-600"></i> Data Wali</h3>
+                <div class="space-y-2">${s.wali.map(w => `<div class="bg-slate-50 p-3 rounded-xl text-xs"><span class="font-bold">${w.nama}</span> <span class="text-3xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded ml-1">${w.tipe}</span><p class="text-slate-400 mt-1">${w.email || '-'} • ${w.telepon || '-'}</p></div>`).join('')}</div>` : ''}`;
+        }
+    } catch (err) {
+        console.warn('Profil API error:', err);
+    }
+}
+
+// ======== EDIT SISWA (MODAL) ========
+function editSiswa(id) {
+    const modal = document.createElement('div');
+    modal.id = 'edit-modal';
+    modal.className = 'fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4';
+    modal.innerHTML = `<div class="bg-white rounded-2xl p-6 w-full max-w-md space-y-4 shadow-2xl">
+        <h3 class="font-bold text-lg text-slate-900">Edit Data Siswa</h3>
+        <div class="text-center py-4"><i class="fa-solid fa-spinner animate-spin text-blue-600 text-xl"></i><p class="text-xs text-slate-400 mt-2">Memuat data...</p></div>
+    </div>`;
+    document.body.appendChild(modal);
+    modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+
+    fetch(`${API_BASE}/siswa.php?id=${id}`).then(r => r.json()).then(data => {
+        if (!data.success) { modal.remove(); alert('Data tidak ditemukan'); return; }
+        const s = data.data;
+        modal.querySelector('.bg-white').innerHTML = `
+            <div class="flex justify-between items-center"><h3 class="font-bold text-lg text-slate-900">Edit Data Siswa</h3><button onclick="document.getElementById('edit-modal').remove()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button></div>
+            <form onsubmit="submitEditSiswa(event,${id})" class="space-y-3">
+                <div class="space-y-1"><label class="text-3xs font-bold text-slate-400 uppercase">NISN</label><input id="edit-nisn" value="${s.nisn}" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-blue-500" required></div>
+                <div class="space-y-1"><label class="text-3xs font-bold text-slate-400 uppercase">Nama</label><input id="edit-nama" value="${s.nama}" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-blue-500" required></div>
+                <div class="space-y-1"><label class="text-3xs font-bold text-slate-400 uppercase">Kelas</label><input id="edit-kelas" value="${s.kelas}" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-blue-500" required></div>
+                <div class="space-y-1"><label class="text-3xs font-bold text-slate-400 uppercase">Jenis Kelamin</label><select id="edit-jk" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none bg-white"><option ${s.jenis_kelamin==='Laki-laki'?'selected':''}>Laki-laki</option><option ${s.jenis_kelamin==='Perempuan'?'selected':''}>Perempuan</option></select></div>
+                <div class="space-y-1"><label class="text-3xs font-bold text-slate-400 uppercase">Status</label><select id="edit-status" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none bg-white"><option ${s.status==='Aktif'?'selected':''}>Aktif</option><option ${s.status==='Verifikasi'?'selected':''}>Verifikasi</option><option ${s.status==='Alumni'?'selected':''}>Alumni</option><option ${s.status==='Pindah'?'selected':''}>Pindah</option></select></div>
+                <div class="space-y-1"><label class="text-3xs font-bold text-slate-400 uppercase">Alamat</label><textarea id="edit-alamat" rows="2" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-blue-500 resize-none">${s.alamat||''}</textarea></div>
+                <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 rounded-xl text-xs">Simpan Perubahan</button>
+            </form>`;
+    }).catch(() => { modal.remove(); alert('Gagal memuat data'); });
+}
+
+async function submitEditSiswa(e, id) {
+    e.preventDefault();
+    try {
+        const res = await fetch(`${API_BASE}/siswa.php?id=${id}`, {
+            method: 'PUT',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                nisn: document.getElementById('edit-nisn').value,
+                nama: document.getElementById('edit-nama').value,
+                kelas: document.getElementById('edit-kelas').value,
+                jenis_kelamin: document.getElementById('edit-jk').value,
+                status: document.getElementById('edit-status').value,
+                alamat: document.getElementById('edit-alamat').value
+            })
+        });
+        const data = await res.json();
+        alert(data.message);
+        if (data.success) { document.getElementById('edit-modal').remove(); loadSiswaData(); }
+    } catch(err) { alert('Gagal menyimpan perubahan'); }
+}
+
+// ======== EXPORT PDF/EXCEL ========
+function exportData(type) {
+    const currentPage = document.querySelector('.page-view:not(.hidden)');
+    if (!currentPage) return;
+    const table = currentPage.querySelector('table');
+    if (!table) { alert('Tidak ada data tabel untuk diekspor'); return; }
+
+    const rows = table.querySelectorAll('tr');
+    let csv = '';
+    rows.forEach(row => {
+        const cols = row.querySelectorAll('th, td');
+        const rowData = [];
+        cols.forEach(col => rowData.push('"' + col.textContent.trim().replace(/"/g,'""') + '"'));
+        csv += rowData.join(',') + '\n';
+    });
+
+    const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `export_data_${Date.now()}.csv`;
+    link.click();
+    alert('Data berhasil diekspor sebagai CSV!');
+}
+
+// ======== FILTER RELASI ========
+function initRelasiFilter() {
+    const filterInput = document.querySelector('#page-admin-relasi .relative input[type="text"]');
+    if (!filterInput) return;
+    filterInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase().trim();
+        const rows = document.querySelectorAll('#rel-table-body tr');
+        rows.forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(query) || query === '' ? '' : 'none';
+        });
+    });
+}
+
+// ======== KELAS FILTER (SISWA PAGE) ========
+async function initKelasFilter() {
+    try {
+        const res = await fetch(`${API_BASE}/siswa.php`);
+        const data = await res.json();
+        if (!data.success) return;
+        const kelasSet = new Set(data.data.map(s => s.kelas));
+        const selects = document.querySelectorAll('#page-admin-siswa select');
+        if (selects[0]) {
+            selects[0].innerHTML = '<option value="">Filter Kelas: Semua Kelas</option>';
+            kelasSet.forEach(k => selects[0].innerHTML += `<option value="${k}">${k}</option>`);
+            selects[0].addEventListener('change', function() {
+                const rows = document.querySelectorAll('#page-admin-siswa table tbody tr');
+                rows.forEach(row => {
+                    if (!this.value) { row.style.display = ''; return; }
+                    const kelasCell = row.querySelectorAll('td')[2];
+                    row.style.display = kelasCell && kelasCell.textContent.trim() === this.value ? '' : 'none';
+                });
+            });
+        }
+    } catch(err) { console.warn('Filter kelas error:', err); }
+}
+
+// ======== KELAS FILTER (LAPORAN PAGE) ========
+function initLaporanKelasFilter() {
+    const sel = document.querySelector('#page-admin-laporan select');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+        const rows = document.querySelectorAll('#page-admin-laporan table tbody tr');
+        rows.forEach(row => {
+            if (!this.value || this.value === 'Semua Kelas') { row.style.display = ''; return; }
+            const kelasCell = row.querySelectorAll('td')[2];
+            row.style.display = kelasCell && kelasCell.textContent.trim().includes(this.value) ? '' : 'none';
+        });
+    });
+}
+
+// ======== MARK NOTIFIKASI AS READ ========
+async function markNotifRead(id, el) {
+    try {
+        await fetch(`${API_BASE}/notifikasi.php?id=${id}&mark_read=1`);
+        if (el) el.classList.add('opacity-60');
+    } catch(err) { console.warn('Mark read error:', err); }
+}
+
+// ======== LOGOUT CLEANUP ========
+function performLogout() {
+    appState.currentUser = null;
+    appState.currentRole = 'admin';
+    appState.currentTab = 'admin-dashboard';
+    document.getElementById('login-password').value = 'password123';
+    setLoginRole('admin');
+    showRoute('login');
+}
+
+// ======== SETTINGS PANEL ========
+function openSettings() {
+    const existing = document.getElementById('settings-modal');
+    if (existing) { existing.remove(); return; }
+    const modal = document.createElement('div');
+    modal.id = 'settings-modal';
+    modal.className = 'fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4';
+    modal.innerHTML = `<div class="bg-white rounded-2xl p-6 w-full max-w-sm space-y-4 shadow-2xl">
+        <div class="flex justify-between items-center"><h3 class="font-bold text-lg text-slate-900">Pengaturan</h3><button onclick="document.getElementById('settings-modal').remove()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button></div>
+        <div class="space-y-3 text-xs">
+            <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl"><span class="font-bold text-slate-700">Notifikasi Email</span><label class="relative inline-flex items-center cursor-pointer"><input type="checkbox" checked class="sr-only peer"><div class="w-9 h-5 bg-slate-300 peer-checked:bg-blue-600 rounded-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div></label></div>
+            <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl"><span class="font-bold text-slate-700">Mode Gelap</span><label class="relative inline-flex items-center cursor-pointer"><input type="checkbox" class="sr-only peer"><div class="w-9 h-5 bg-slate-300 peer-checked:bg-blue-600 rounded-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div></label></div>
+            <div class="p-3 bg-slate-50 rounded-xl"><p class="font-bold text-slate-700">Versi Sistem</p><p class="text-slate-400 mt-1">EduGuardian v1.2.0</p></div>
+        </div>
+    </div>`;
+    document.body.appendChild(modal);
+    modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+}
+
+// ======== FORGOT PASSWORD ========
+function showForgotPassword() {
+    const modal = document.createElement('div');
+    modal.id = 'forgot-modal';
+    modal.className = 'fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4';
+    modal.innerHTML = `<div class="bg-white rounded-2xl p-6 w-full max-w-sm space-y-4 shadow-2xl">
+        <div class="flex justify-between items-center"><h3 class="font-bold text-lg text-slate-900">Lupa Kata Sandi</h3><button onclick="document.getElementById('forgot-modal').remove()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button></div>
+        <p class="text-xs text-slate-400">Masukkan email Anda untuk menerima instruksi reset password.</p>
+        <input type="email" id="forgot-email" placeholder="nama@email.com" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-blue-500">
+        <button onclick="alert('Instruksi reset password telah dikirim ke email: '+document.getElementById('forgot-email').value);document.getElementById('forgot-modal').remove()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 rounded-xl text-xs">Kirim Reset Link</button>
+    </div>`;
+    document.body.appendChild(modal);
+    modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+}
+
+// ======== INIT ALL FEATURES ON DOM READY ========
+const _origDOMReady = window.onload;
+window.addEventListener('DOMContentLoaded', () => {
+    // Password toggle
+    const eyeBtn = document.querySelector('#login-password ~ span');
+    if (eyeBtn) eyeBtn.addEventListener('click', togglePasswordVisibility);
+
+    // Search
+    initSearch();
+
+    // Radio buttons
+    setTimeout(initRadioButtons, 500);
+
+    // Relasi filter
+    setTimeout(initRelasiFilter, 500);
+});

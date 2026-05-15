@@ -1,9 +1,4 @@
 <?php
-// ============================================
-// EduGuardian - API Dashboard
-// Method: GET
-// Query: ?action=stats | ?action=wali_terbaru | ?action=aktivitas
-// ============================================
 
 require_once __DIR__ . '/config.php';
 
@@ -15,7 +10,6 @@ $action = $_GET['action'] ?? 'stats';
 
 switch ($action) {
 
-    // ---- Statistik Dashboard ----
     case 'stats':
         $totalWali = $conn->query("SELECT COUNT(*) as total FROM wali")->fetch_assoc()['total'];
         $totalSiswa = $conn->query("SELECT COUNT(*) as total FROM siswa")->fetch_assoc()['total'];
@@ -35,7 +29,6 @@ switch ($action) {
         ]);
         break;
 
-    // ---- Wali Terbaru (untuk tabel dashboard) ----
     case 'wali_terbaru':
         $limit = $_GET['limit'] ?? 5;
         $sql = "SELECT id, nama, email, pekerjaan, status, created_at FROM wali ORDER BY created_at DESC LIMIT ?";
@@ -56,7 +49,6 @@ switch ($action) {
         $stmt->close();
         break;
 
-    // ---- Aktivitas Terkini ----
     case 'aktivitas':
         $sql = "SELECT id, judul, pesan, tipe, created_at FROM notifikasi ORDER BY created_at DESC LIMIT 5";
         $result = $conn->query($sql);

@@ -1,10 +1,4 @@
 <?php
-// ============================================
-// EduGuardian - API Relasi Siswa-Wali
-// GET    /api/relasi.php         → Daftar semua relasi
-// POST   /api/relasi.php         → Tambah relasi baru
-// DELETE /api/relasi.php?id=1    → Hapus relasi
-// ============================================
 
 require_once __DIR__ . '/config.php';
 
@@ -12,7 +6,6 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 switch ($method) {
 
-    // ======== GET: Daftar Relasi ========
     case 'GET':
         $sql = "SELECT r.id, r.tipe, r.status, r.created_at,
                        s.id as siswa_id, s.nisn, s.nama as siswa_nama,
@@ -28,7 +21,6 @@ switch ($method) {
             $relasiList[] = $row;
         }
 
-        // Hitung siswa yang belum punya relasi
         $siswaTanpaRelasi = $conn->query("SELECT COUNT(*) as t FROM siswa WHERE id NOT IN (SELECT DISTINCT siswa_id FROM relasi)")->fetch_assoc()['t'];
 
         sendResponse([
@@ -41,7 +33,6 @@ switch ($method) {
         ]);
         break;
 
-    // ======== POST: Tambah Relasi Baru ========
     case 'POST':
         $input = getJsonInput();
 
@@ -53,7 +44,6 @@ switch ($method) {
         $waliId = (int)$input['wali_id'];
         $tipe = $conn->real_escape_string($input['tipe']);
 
-        // Cek apakah siswa dan wali ada
         $cekSiswa = $conn->query("SELECT id, nama FROM siswa WHERE id = $siswaId");
         $cekWali = $conn->query("SELECT id, nama FROM wali WHERE id = $waliId");
 
@@ -67,13 +57,11 @@ switch ($method) {
         $siswaData = $cekSiswa->fetch_assoc();
         $waliData = $cekWali->fetch_assoc();
 
-        // Insert relasi
         $sql = "INSERT INTO relasi (siswa_id, wali_id, tipe, status) VALUES (?, ?, ?, 'Pending')";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("iis", $siswaId, $waliId, $tipe);
 
         if ($stmt->execute()) {
-            // Buat notifikasi otomatis
             $judulNotif = "Relasi Baru Ditambahkan";
             $pesanNotif = "Relasi baru antara siswa {$siswaData['nama']} dengan wali {$waliData['nama']} ({$tipe}) telah ditambahkan.";
             $sqlNotif = "INSERT INTO notifikasi (judul, pesan, tipe, user_id) VALUES (?, ?, 'info', 1)";
@@ -99,7 +87,6 @@ switch ($method) {
         $stmt->close();
         break;
 
-    // ======== DELETE: Hapus Relasi ========
     case 'DELETE':
         if (!isset($_GET['id'])) {
             sendResponse(['success' => false, 'message' => 'ID relasi diperlukan'], 400);

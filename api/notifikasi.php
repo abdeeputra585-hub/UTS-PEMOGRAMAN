@@ -1,9 +1,4 @@
 <?php
-// ============================================
-// EduGuardian - API Notifikasi
-// GET /api/notifikasi.php              → Semua notifikasi
-// GET /api/notifikasi.php?user_id=1    → Notifikasi per user
-// ============================================
 
 require_once __DIR__ . '/config.php';
 

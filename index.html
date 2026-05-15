@@ -70,7 +70,7 @@
                         <div class="space-y-1">
                             <div class="flex justify-between items-center"><label
                                     class="text-2xs font-bold uppercase tracking-wider text-slate-500">Kata
-                                    Sandi</label><a href="#" class="text-2xs text-blue-600 hover:underline">Lupa
+                                    Sandi</label><a onclick="showForgotPassword()" class="text-2xs text-blue-600 hover:underline cursor-pointer">Lupa
                                     Sandi?</a></div>
                             <div class="relative"><span
                                     class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-xs"><i
@@ -223,7 +223,7 @@
                                 Administrator</p>
                         </div>
                     </div>
-                    <button onclick="showRoute('login')"
+                    <button onclick="performLogout()"
                         class="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-red-600 hover:bg-red-50 rounded-xl transition-all"><i
                             class="fa-solid fa-arrow-right-from-bracket text-sm"></i> Keluar Sistem</button>
                 </div>
@@ -246,7 +246,7 @@
                             class="relative w-8 h-8 flex items-center justify-center hover:bg-slate-100 rounded-full transition-all text-sm"><i
                                 class="fa-regular fa-bell"></i><span
                                 class="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-red-500 rounded-full"></span></button>
-                        <button
+                        <button onclick="openSettings()"
                             class="w-8 h-8 flex items-center justify-center hover:bg-slate-100 rounded-full transition-all text-sm"><i
                                 class="fa-solid fa-gear"></i></button>
                     </div>
@@ -327,7 +327,7 @@
                                 class="lg:col-span-2 bg-white border border-slate-200 rounded-2xl shadow-2xs overflow-hidden">
                                 <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-white">
                                     <h4 class="font-bold text-slate-900 text-sm">Data Wali Terbaru</h4><button
-                                        class="text-blue-600 text-2xs font-bold hover:underline">Lihat Semua</button>
+                                        onclick="switchTab('admin-siswa')" class="text-blue-600 text-2xs font-bold hover:underline">Lihat Semua</button>
                                 </div>
                                 <div class="overflow-x-auto">
                                     <table class="w-full text-left text-xs">
@@ -423,7 +423,7 @@
                                         <p class="text-3xs text-slate-400">Ibu Sari • 1 jam yang lalu</p>
                                     </div>
                                 </div>
-                                <button
+                                <button onclick="switchTab('notifikasi')"
                                     class="w-full bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-bold py-2 rounded-xl border border-slate-100">Lihat
                                     Log Lengkap</button>
                             </div>
@@ -494,7 +494,7 @@
                                         class="px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl outline-none">
                                         <option>Urutkan: Terbaru</option>
                                     </select></div>
-                                <button
+                                <button onclick="exportData()"
                                     class="text-slate-600 border border-slate-200 rounded-xl text-2xs font-bold px-3 py-1.5 hover:bg-slate-50 shadow-3xs"><i
                                         class="fa-solid fa-download mr-1 text-slate-400"></i> Export PDF/Excel</button>
                             </div>
