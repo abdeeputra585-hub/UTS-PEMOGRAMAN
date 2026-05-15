@@ -271,9 +271,52 @@ async function loadDashboardData() {
                 });
             }
         }
+
+        // Render aktivitas terkini
+        if (aktivitas.success && aktivitas.data.length > 0) {
+            const container = document.getElementById('aktivitas-list');
+            if (container) {
+                container.innerHTML = '';
+                aktivitas.data.forEach(a => {
+                    const colorMap = { info: 'blue', success: 'emerald', warning: 'amber', error: 'red' };
+                    const dotColor = colorMap[a.tipe] || 'blue';
+                    // Determine target page based on content
+                    let targetTab = 'notifikasi';
+                    const judul = a.judul.toLowerCase();
+                    if (judul.includes('relasi')) targetTab = 'admin-relasi';
+                    else if (judul.includes('wali') && judul.includes('terdaftar')) targetTab = 'admin-siswa';
+                    else if (judul.includes('sinkron') || judul.includes('dapodik')) targetTab = 'admin-siswa';
+                    else if (judul.includes('verifikasi')) targetTab = 'notifikasi';
+                    else if (judul.includes('laporan')) targetTab = 'admin-laporan';
+
+                    const timeAgo = getTimeAgo(a.created_at);
+
+                    container.innerHTML += `<div class="relative mb-2 cursor-pointer hover:opacity-80 transition-opacity" onclick="switchTab('${targetTab}')">
+                        <span class="absolute -left-6 w-3 h-3 bg-${dotColor}-500 rounded-full border-2 border-white mt-0.5"></span>
+                        <p class="font-bold text-slate-900">${a.judul}</p>
+                        <p class="text-3xs text-slate-400">${a.pesan.substring(0, 60)}${a.pesan.length > 60 ? '...' : ''} • ${timeAgo}</p>
+                    </div>`;
+                });
+            }
+        }
     } catch (err) {
         console.warn('Dashboard API belum aktif:', err);
     }
+}
+
+// Helper: format waktu relatif
+function getTimeAgo(dateStr) {
+    const now = new Date();
+    const date = new Date(dateStr);
+    const diffMs = now - date;
+    const diffMins = Math.floor(diffMs / 60000);
+    if (diffMins < 1) return 'Baru saja';
+    if (diffMins < 60) return diffMins + ' menit yang lalu';
+    const diffHours = Math.floor(diffMins / 60);
+    if (diffHours < 24) return diffHours + ' jam yang lalu';
+    const diffDays = Math.floor(diffHours / 24);
+    if (diffDays < 7) return diffDays + ' hari yang lalu';
+    return date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
 // ======== LOAD SISWA DATA ========
@@ -749,6 +792,7 @@ function performLogout() {
 function openSettings() {
     const existing = document.getElementById('settings-modal');
     if (existing) { existing.remove(); return; }
+    const isDark = document.body.classList.contains('dark');
     const modal = document.createElement('div');
     modal.id = 'settings-modal';
     modal.className = 'fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4';
@@ -756,13 +800,31 @@ function openSettings() {
         <div class="flex justify-between items-center"><h3 class="font-bold text-lg text-slate-900">Pengaturan</h3><button onclick="document.getElementById('settings-modal').remove()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button></div>
         <div class="space-y-3 text-xs">
             <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl"><span class="font-bold text-slate-700">Notifikasi Email</span><label class="relative inline-flex items-center cursor-pointer"><input type="checkbox" checked class="sr-only peer"><div class="w-9 h-5 bg-slate-300 peer-checked:bg-blue-600 rounded-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div></label></div>
-            <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl"><span class="font-bold text-slate-700">Mode Gelap</span><label class="relative inline-flex items-center cursor-pointer"><input type="checkbox" class="sr-only peer"><div class="w-9 h-5 bg-slate-300 peer-checked:bg-blue-600 rounded-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div></label></div>
+            <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl"><span class="font-bold text-slate-700">Mode Gelap</span><label class="relative inline-flex items-center cursor-pointer"><input type="checkbox" id="dark-mode-toggle" ${isDark ? 'checked' : ''} class="sr-only peer" onchange="toggleDarkMode(this.checked)"><div class="w-9 h-5 bg-slate-300 peer-checked:bg-blue-600 rounded-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div></label></div>
             <div class="p-3 bg-slate-50 rounded-xl"><p class="font-bold text-slate-700">Versi Sistem</p><p class="text-slate-400 mt-1">EduGuardian v1.2.0</p></div>
         </div>
     </div>`;
     document.body.appendChild(modal);
     modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
 }
+
+// ======== DARK MODE TOGGLE ========
+function toggleDarkMode(enabled) {
+    if (enabled) {
+        document.body.classList.add('dark');
+        localStorage.setItem('eduguardian-dark', 'true');
+    } else {
+        document.body.classList.remove('dark');
+        localStorage.setItem('eduguardian-dark', 'false');
+    }
+}
+
+// Apply saved dark mode on page load
+(function() {
+    if (localStorage.getItem('eduguardian-dark') === 'true') {
+        document.body.classList.add('dark');
+    }
+})();
 
 // ======== FORGOT PASSWORD ========
 function showForgotPassword() {
