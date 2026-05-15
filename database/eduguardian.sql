@@ -59,7 +59,15 @@ CREATE TABLE IF NOT EXISTS notifikasi (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 ) ENGINE=InnoDB;
 
-
+CREATE TABLE IF NOT EXISTS kehadiran (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    siswa_id INT NOT NULL,
+    tanggal DATE NOT NULL,
+    status ENUM('Hadir', 'Izin', 'Sakit', 'Alpa') NOT NULL,
+    keterangan VARCHAR(255) DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (siswa_id) REFERENCES siswa(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
 
 
 INSERT INTO users (email, password, role, nama, avatar) VALUES

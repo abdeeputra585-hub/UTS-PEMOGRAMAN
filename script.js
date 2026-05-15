@@ -639,7 +639,50 @@ async function loadProfilSiswa(id) {
                     <div><p class="text-3xs font-bold text-slate-400 uppercase">Alamat</p><p class="font-semibold text-slate-700 mt-1">${s.alamat || '-'}</p></div>
                 </div>
                 ${s.wali && s.wali.length > 0 ? `<h3 class="font-bold text-slate-900 text-sm flex items-center gap-2 mt-4"><i class="fa-solid fa-users text-purple-600"></i> Data Wali</h3>
-                <div class="space-y-2">${s.wali.map(w => `<div class="bg-slate-50 p-3 rounded-xl text-xs"><span class="font-bold">${w.nama}</span> <span class="text-3xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded ml-1">${w.tipe}</span><p class="text-slate-400 mt-1">${w.email || '-'} • ${w.telepon || '-'}</p></div>`).join('')}</div>` : ''}`;
+                <div class="space-y-2">${s.wali.map(w => `<div class="bg-slate-50 p-3 rounded-xl text-xs"><span class="font-bold">${w.nama}</span> <span class="text-3xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded ml-1">${w.tipe}</span><p class="text-slate-400 mt-1">${w.email || '-'} • ${w.telepon || '-'}</p></div>`).join('')}</div>` : ''}
+                <div id="attendance-overview-container" class="mt-4">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2 mb-3"><i class="fa-solid fa-calendar-check text-emerald-600"></i> Ringkasan Kehadiran Siswa</h3>
+                    <div class="flex items-center justify-center p-4"><i class="fa-solid fa-spinner animate-spin text-blue-600"></i></div>
+                </div>`;
+                
+            // Fetch attendance
+            fetch(`${API_BASE}/kehadiran.php?siswa_id=${id}&action=summary`)
+                .then(r => r.json())
+                .then(attData => {
+                    const attContainer = document.getElementById('attendance-overview-container');
+                    if (attContainer && attData.success) {
+                        const sum = attData.data.summary;
+                        attContainer.innerHTML = `
+                            <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2 mb-3"><i class="fa-solid fa-calendar-check text-emerald-600"></i> Ringkasan Kehadiran Siswa</h3>
+                            <div class="grid grid-cols-4 gap-2 text-center text-xs">
+                                <div class="bg-emerald-50 text-emerald-700 p-2 rounded-xl border border-emerald-100"><p class="font-bold text-lg">${sum.Hadir || 0}</p><p class="text-3xs font-bold uppercase mt-1">Hadir</p></div>
+                                <div class="bg-blue-50 text-blue-700 p-2 rounded-xl border border-blue-100"><p class="font-bold text-lg">${sum.Izin || 0}</p><p class="text-3xs font-bold uppercase mt-1">Izin</p></div>
+                                <div class="bg-amber-50 text-amber-700 p-2 rounded-xl border border-amber-100"><p class="font-bold text-lg">${sum.Sakit || 0}</p><p class="text-3xs font-bold uppercase mt-1">Sakit</p></div>
+                                <div class="bg-red-50 text-red-700 p-2 rounded-xl border border-red-100"><p class="font-bold text-lg">${sum.Alpa || 0}</p><p class="text-3xs font-bold uppercase mt-1">Alpa</p></div>
+                            </div>
+                            ${attData.data.history && attData.data.history.length > 0 ? `
+                                <div class="mt-3 bg-slate-50 rounded-xl p-3">
+                                    <p class="text-3xs font-bold text-slate-500 uppercase mb-2">Riwayat Terbaru</p>
+                                    <div class="space-y-2">
+                                        ${attData.data.history.map(h => {
+                                            const statusColor = h.status === 'Hadir' ? 'emerald' : (h.status === 'Izin' ? 'blue' : (h.status === 'Sakit' ? 'amber' : 'red'));
+                                            return `<div class="flex justify-between items-center text-xs">
+                                                <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-${statusColor}-500"></span><span class="text-slate-600">${h.tanggal}</span></div>
+                                                <span class="font-bold text-${statusColor}-600">${h.status} ${h.keterangan ? `(${h.keterangan})` : ''}</span>
+                                            </div>`;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+                        `;
+                    } else if (attContainer) {
+                        attContainer.innerHTML = `<p class="text-xs text-slate-400 italic">Data kehadiran belum tersedia.</p>`;
+                    }
+                })
+                .catch(e => {
+                    const attContainer = document.getElementById('attendance-overview-container');
+                    if (attContainer) attContainer.innerHTML = `<p class="text-xs text-slate-400 italic">Data kehadiran belum tersedia (API offline).</p>`;
+                });
         }
     } catch (err) {
         console.warn('Profil API error:', err);
